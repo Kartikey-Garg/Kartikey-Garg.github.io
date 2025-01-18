@@ -16,7 +16,7 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -24,6 +24,7 @@
             color: var(--text-light);
             overflow-x: hidden;
             transition: background 0.5s ease, color 0.5s ease;
+            line-height: 1.6;
         }
 
         header {
@@ -76,23 +77,22 @@
             font-size: 1.8rem;
         }
 
-        .bio p, .achievements ul, .certifications ul {
+        .bio p, .achievements ul, .certifications ul, .interests ul, .contact p {
             font-size: 1rem;
-            line-height: 1.6;
         }
 
-        .achievements ul, .certifications ul {
+        .achievements ul, .certifications ul, .interests ul {
             list-style: none;
             padding: 0;
         }
 
-        .achievements li, .certifications li {
+        .achievements li, .certifications li, .interests li {
             margin-bottom: 10px;
             padding-left: 20px;
             position: relative;
         }
 
-        .achievements li::before, .certifications li::before {
+        .achievements li::before, .certifications li::before, .interests li::before {
             content: '\2022';
             color: #6c63ff;
             position: absolute;
@@ -110,18 +110,6 @@
         footer p {
             margin: 0;
             font-size: 0.9rem;
-        }
-
-        @keyframes floating {
-            0% {
-                transform: translate(0, 0);
-            }
-            50% {
-                transform: translate(20px, -20px);
-            }
-            100% {
-                transform: translate(0, 0);
-            }
         }
 
         .background-animation {
@@ -226,6 +214,8 @@
             <a href="#bio">Bio</a>
             <a href="#achievements">Achievements</a>
             <a href="#certifications">Certifications</a>
+            <a href="#interests">Interests</a>
+            <a href="#contact">Contact</a>
         </nav>
     </header>
 
@@ -252,6 +242,22 @@
                 <li>Certification 3: Details about the certification.</li>
             </ul>
         </section>
+
+        <section id="interests" class="interests">
+            <h2>Interests</h2>
+            <ul>
+                <li>Interest 1: Describe your interest here.</li>
+                <li>Interest 2: Describe your interest here.</li>
+                <li>Interest 3: Describe your interest here.</li>
+            </ul>
+        </section>
+
+        <section id="contact" class="contact">
+            <h2>Contact</h2>
+            <p>Email: [Your Email Address]</p>
+            <p>Phone: [Your Phone Number]</p>
+            <p>LinkedIn: <a href="#">[Your LinkedIn Profile]</a></p>
+        </section>
     </div>
 
     <footer>
@@ -261,7 +267,8 @@
     <script>
         function toggleTheme() {
             const root = document.documentElement;
-            if (root.style.getPropertyValue('--background-light')) {
+            const currentTheme = root.style.getPropertyValue('--background-light');
+            if (currentTheme) {
                 root.style.setProperty('--background-light', '');
                 root.style.setProperty('--text-light', '');
                 root.style.setProperty('--section-bg-light', '');
