@@ -6,14 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Portfolio</title>
     <style>
+        :root {
+            --background-light: linear-gradient(135deg, #6c63ff, #f4f4f9);
+            --background-dark: linear-gradient(135deg, #1e1e1e, #333);
+            --text-light: #333;
+            --text-dark: #f4f4f9;
+            --section-bg-light: rgba(255, 255, 255, 0.9);
+            --section-bg-dark: rgba(50, 50, 50, 0.9);
+        }
+
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            background: linear-gradient(135deg, #6c63ff, #f4f4f9);
-            color: #333;
+            background: var(--background-light);
+            color: var(--text-light);
             overflow-x: hidden;
+            transition: background 0.5s ease, color 0.5s ease;
         }
 
         header {
@@ -51,6 +61,12 @@
 
         section {
             margin-bottom: 40px;
+            background: var(--section-bg-light);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            transition: background 0.5s ease;
         }
 
         section h2 {
@@ -58,13 +74,6 @@
             padding-bottom: 10px;
             margin-bottom: 20px;
             font-size: 1.8rem;
-        }
-
-        .bio, .achievements, .certifications {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            padding: 20px;
         }
 
         .bio p, .achievements ul, .certifications ul {
@@ -157,6 +166,37 @@
             animation-delay: 2s;
         }
 
+        .background-animation span:nth-child(4) {
+            top: 20%;
+            left: 80%;
+            animation-duration: 5s;
+            animation-delay: 1.5s;
+        }
+
+        .background-animation span:nth-child(5) {
+            top: 60%;
+            left: 10%;
+            animation-duration: 8s;
+            animation-delay: 0.5s;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #6c63ff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .theme-toggle:hover {
+            background: #574bdf;
+        }
+
         @media (max-width: 600px) {
             header h1 {
                 font-size: 2rem;
@@ -174,7 +214,11 @@
         <span></span>
         <span></span>
         <span></span>
+        <span></span>
+        <span></span>
     </div>
+
+    <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
 
     <header>
         <h1>My Portfolio</h1>
@@ -213,6 +257,27 @@
     <footer>
         <p>&copy; 2025 [Your Name]. All Rights Reserved.</p>
     </footer>
+
+    <script>
+        function toggleTheme() {
+            const root = document.documentElement;
+            if (root.style.getPropertyValue('--background-light')) {
+                root.style.setProperty('--background-light', '');
+                root.style.setProperty('--text-light', '');
+                root.style.setProperty('--section-bg-light', '');
+                root.style.setProperty('--background-dark', 'linear-gradient(135deg, #1e1e1e, #333)');
+                root.style.setProperty('--text-dark', '#f4f4f9');
+                root.style.setProperty('--section-bg-dark', 'rgba(50, 50, 50, 0.9)');
+            } else {
+                root.style.setProperty('--background-light', 'linear-gradient(135deg, #6c63ff, #f4f4f9)');
+                root.style.setProperty('--text-light', '#333');
+                root.style.setProperty('--section-bg-light', 'rgba(255, 255, 255, 0.9)');
+                root.style.setProperty('--background-dark', '');
+                root.style.setProperty('--text-dark', '');
+                root.style.setProperty('--section-bg-dark', '');
+            }
+        }
+    </script>
 </body>
 
 </html>
