@@ -13,6 +13,8 @@
             --text-dark: #f4f4f9;
             --section-bg-light: rgba(255, 255, 255, 0.85);
             --section-bg-dark: rgba(50, 50, 50, 0.85);
+            --link-light: #6c63ff;
+            --link-dark: #91a7ff;
         }
 
         body {
@@ -37,21 +39,6 @@
         header h1 {
             margin: 0;
             font-size: 2.5rem;
-        }
-
-        nav {
-            margin-top: 10px;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin: 0 10px;
-            font-weight: bold;
-        }
-
-        nav a:hover {
-            text-decoration: underline;
         }
 
         .container {
@@ -135,41 +122,6 @@
             opacity: 0.7;
         }
 
-        .background-animation span:nth-child(1) {
-            top: 10%;
-            left: 20%;
-            animation-duration: 12s;
-            animation-delay: 0s;
-        }
-
-        .background-animation span:nth-child(2) {
-            top: 40%;
-            left: 60%;
-            animation-duration: 14s;
-            animation-delay: 2s;
-        }
-
-        .background-animation span:nth-child(3) {
-            top: 70%;
-            left: 30%;
-            animation-duration: 16s;
-            animation-delay: 4s;
-        }
-
-        .background-animation span:nth-child(4) {
-            top: 20%;
-            left: 80%;
-            animation-duration: 18s;
-            animation-delay: 6s;
-        }
-
-        .background-animation span:nth-child(5) {
-            top: 60%;
-            left: 10%;
-            animation-duration: 20s;
-            animation-delay: 8s;
-        }
-
         .theme-toggle {
             position: fixed;
             top: 20px;
@@ -185,6 +137,16 @@
 
         .theme-toggle:hover {
             background: #574bdf;
+        }
+
+        a {
+            color: var(--link-light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            text-decoration: underline;
         }
 
         @keyframes floating {
@@ -213,96 +175,103 @@
 
 <body>
     <div class="background-animation">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
+        <script>
+            for (let i = 0; i < 30; i++) {
+                const span = document.createElement('span');
+                const size = Math.random() * 60;
+                span.style.width = span.style.height = size + 'px';
+                span.style.top = Math.random() * innerHeight + 'px';
+                span.style.left = Math.random() * innerWidth + 'px';
+                span.style.background = `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 0.2)`;
+                span.style.animationDuration = Math.random() * 10 + 10 + 's';
+                span.style.animationDelay = Math.random() * 10 + 's';
+                document.querySelector('.background-animation').appendChild(span);
+            }
+        </script>
     </div>
 
     <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
 
     <header>
         <h1>My Portfolio</h1>
-        <nav>
-            <a href="#bio">Bio</a>
-            <a href="#achievements">Achievements</a>
-            <a href="#certifications">Certifications</a>
-            <a href="#interests">Interests</a>
-            <a href="#contact">Contact</a>
-            <a href="#links">Links</a>
-        </nav>
     </header>
 
     <div class="container">
         <section id="bio" class="bio">
             <h2>About Me</h2>
-            <p>Hello! I am [Your Name], a [Your Profession] with a passion for [Your Interests]. I specialize in [Your Specialization]. Welcome to my portfolio!</p>
+            <p><img src="./Data/MyImage.png" alt="Your Picture" style="width:100px;height:auto;border-radius:50%;float:left;margin-right:15px;">Hello! I am KARTIKEY GARG, a Test Specialist with a passion for Exploring AI, Creating something new with AI and putting my knowledge to deal with day-to-day tasks. I specialize in Testing APIs & Websites, Writing Code and Prompting AI Model to do similar activities. Welcome to my Portfolio!</p>
         </section>
 
         <section id="achievements" class="achievements">
             <h2>Achievements</h2>
             <ul>
-                <li>Achievement 1: Describe your achievement here.</li>
-                <li>Achievement 2: Describe your achievement here.</li>
-                <li>Achievement 3: Describe your achievement here.</li>
+                <li><b>Medal of Dicipline</b>: Received Best Student Award in Guru Vandan Chatra Abhinandan Ceremony at Raebareli</li>
+                <li><b>Medal of Excellence</b>: Received Best Student Award in School Twice</li>
             </ul>
         </section>
 
         <section id="certifications" class="certifications">
             <h2>Certifications</h2>
             <ul>
-                <li>Certification 1: Details about the certification.</li>
-                <li>Certification 2: Details about the certification.</li>
-                <li>Certification 3: Details about the certification.</li>
+                <li>ISTQB Certified Agile Tester CTFL-AT</li>
+                <li>IBM Certified Cloud Technical Advocate</li>
+                <li>Microsoft Certified: Azure Fundamentals AZ-900</li>
             </ul>
         </section>
 
         <section id="interests" class="interests">
             <h2>Interests</h2>
             <ul>
-                <li>Interest 1: Describe your interest here.</li>
-                <li>Interest 2: Describe your interest here.</li>
-                <li>Interest 3: Describe your interest here.</li>
+                <li>Exploring AI and Prompting</li>
+                <li>Browsing about Trends in Technology</li>
+                <li>Listening to Music</li>
+                <li>Playing Online Games</li>
             </ul>
         </section>
 
         <section id="contact" class="contact">
             <h2>Contact</h2>
-            <p>Email: [Your Email Address]</p>
-            <p>Phone: [Your Phone Number]</p>
-            <p>LinkedIn: <a href="#">[Your LinkedIn Profile]</a></p>
+            <p>Email: kartikeygarg57@gmail.com</p>
+            <p>Phone: +91-8858986110</p>
         </section>
 
         <section id="links" class="links">
             <h2>Links</h2>
             <ul>
-                <li><a href="https://credly.com" target="_blank">Credly</a></li>
-                <li><a href="https://linkedin.com" target="_blank">LinkedIn</a></li>
-                <li><a href="https://youtube.com" target="_blank">YouTube</a></li>
+                <li><a href="https://www.credly.com/users/kartikey-garg" target="_blank">Credly</a></li>
+                <li><a href="https://www.linkedin.com/in/kartikey-garg-a46004111" target="_blank">LinkedIn</a></li>
+                <li><a href="https://www.youtube.com/@kartikeygarg7564" target="_blank">YouTube</a></li>
             </ul>
         </section>
     </div>
 
     <footer>
-        <p>&copy; 2025 [Your Name]. All Rights Reserved.</p>
+        <p>&copy; 2025 Kartikey Garg. All Rights Reserved.</p>
     </footer>
 
     <script>
         function toggleTheme() {
             const root = document.documentElement;
-            const currentTheme = getComputedStyle(root).getPropertyValue('--background-light');
-            if (currentTheme.trim() === 'linear-gradient(135deg, #6c63ff, #f4f4f9)') {
+            const currentBackground = getComputedStyle(root).getPropertyValue('--background-light').trim();
+            if (currentBackground === 'linear-gradient(135deg, #6c63ff, #f4f4f9)') {
                 root.style.setProperty('--background-light', 'linear-gradient(135deg, #1e1e1e, #333)');
                 root.style.setProperty('--text-light', '#f4f4f9');
                 root.style.setProperty('--section-bg-light', 'rgba(50, 50, 50, 0.85)');
+                root.style.setProperty('--link-light', '#91a7ff');
             } else {
                 root.style.setProperty('--background-light', 'linear-gradient(135deg, #6c63ff, #f4f4f9)');
                 root.style.setProperty('--text-light', '#333');
                 root.style.setProperty('--section-bg-light', 'rgba(255, 255, 255, 0.85)');
+                root.style.setProperty('--link-light', '#6c63ff');
             }
+        }
+
+        function readAloud() {
+            const synth = window.speechSynthesis;
+            const text = document.body.innerText;
+            const utterance = new SpeechSynthesisUtterance(text);
+            synth.speak(utterance);
         }
     </script>
 </body>
-
 </html>
