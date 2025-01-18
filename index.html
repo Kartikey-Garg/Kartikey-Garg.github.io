@@ -1,1 +1,161 @@
-Hello World
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bouncing Ball</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #282c34;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        canvas {
+            display: block;
+        }
+
+        .controls {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .controls label {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="bouncingBallCanvas"></canvas>
+    <div class="controls">
+        <label>Gravity: <input type="range" id="gravity" min="0" max="1" step="0.01" value="0"></label>
+        <label>Ball Size: <input type="range" id="ballSize" min="10" max="50" value="20"></label>
+        <label>Speed: <input type="range" id="speed" min="1" max="10" value="5"></label>
+        <button id="addBall">Add Ball</button>
+        <button id="clearBalls">Clear Balls</button>
+    </div>
+    <script>
+        const canvas = document.getElementById('bouncingBallCanvas');
+        const ctx = canvas.getContext('2d');
+        const gravityControl = document.getElementById('gravity');
+        const ballSizeControl = document.getElementById('ballSize');
+        const speedControl = document.getElementById('speed');
+        const addBallButton = document.getElementById('addBall');
+        const clearBallsButton = document.getElementById('clearBalls');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const balls = [];
+        let gravity = parseFloat(gravityControl.value);
+
+        function createBall(x, y, radius, dx, dy, color) {
+            return { x, y, radius, dx, dy, color };
+        }
+
+        function randomColor() {
+            return `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
+        }
+
+        function randomBall() {
+            const radius = parseInt(ballSizeControl.value);
+            const x = Math.random() * (canvas.width - 2 * radius) + radius;
+            const y = Math.random() * (canvas.height - 2 * radius) + radius;
+            const dx = (Math.random() - 0.5) * parseInt(speedControl.value);
+            const dy = (Math.random() - 0.5) * parseInt(speedControl.value);
+            const color = randomColor();
+            return createBall(x, y, radius, dx, dy, color);
+        }
+
+        function drawBall(ball) {
+            ctx.beginPath();
+            ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+            ctx.fillStyle = ball.color;
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        function updateBallPosition(ball) {
+            ball.dy += gravity;
+            ball.x += ball.dx;
+            ball.y += ball.dy;
+
+            if (ball.x + ball.radius > canvas.width || ball.x - ball.radius < 0) {
+                ball.dx *= -1;
+            }
+
+            if (ball.y + ball.radius > canvas.height || ball.y - ball.radius < 0) {
+                ball.dy *= -1;
+                ball.y = ball.y + ball.radius > canvas.height ? canvas.height - ball.radius : ball.radius;
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            balls.forEach(ball => {
+                drawBall(ball);
+                updateBallPosition(ball);
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        canvas.addEventListener('click', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const newBall = randomBall();
+            newBall.x = x;
+            newBall.y = y;
+            balls.push(newBall);
+        });
+
+        addBallButton.addEventListener('click', () => {
+            balls.push(randomBall());
+        });
+
+        clearBallsButton.addEventListener('click', () => {
+            balls.length = 0;
+        });
+
+        gravityControl.addEventListener('input', () => {
+            gravity = parseFloat(gravityControl.value);
+        });
+
+        for (let i = 0; i < 10; i++) {
+            balls.push(randomBall());
+        }
+
+        animate();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            balls.forEach(ball => {
+                if (ball.x + ball.radius > canvas.width) {
+                    ball.x = canvas.width - ball.radius;
+                }
+                if (ball.x - ball.radius < 0) {
+                    ball.x = ball.radius;
+                }
+                if (ball.y + ball.radius > canvas.height) {
+                    ball.y = canvas.height - ball.radius;
+                }
+                if (ball.y - ball.radius < 0) {
+                    ball.y = ball.radius;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
