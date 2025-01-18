@@ -11,8 +11,8 @@
             --background-dark: linear-gradient(135deg, #1e1e1e, #333);
             --text-light: #333;
             --text-dark: #f4f4f9;
-            --section-bg-light: rgba(255, 255, 255, 0.9);
-            --section-bg-dark: rgba(50, 50, 50, 0.9);
+            --section-bg-light: rgba(255, 255, 255, 0.85);
+            --section-bg-dark: rgba(50, 50, 50, 0.85);
         }
 
         body {
@@ -58,10 +58,12 @@
             width: 90%;
             max-width: 1200px;
             margin: 20px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
         }
 
         section {
-            margin-bottom: 40px;
             background: var(--section-bg-light);
             backdrop-filter: blur(10px);
             border-radius: 8px;
@@ -216,6 +218,7 @@
             <a href="#certifications">Certifications</a>
             <a href="#interests">Interests</a>
             <a href="#contact">Contact</a>
+            <a href="#links">Links</a>
         </nav>
     </header>
 
@@ -258,6 +261,15 @@
             <p>Phone: [Your Phone Number]</p>
             <p>LinkedIn: <a href="#">[Your LinkedIn Profile]</a></p>
         </section>
+
+        <section id="links" class="links">
+            <h2>Links</h2>
+            <ul>
+                <li><a href="https://credly.com" target="_blank">Credly</a></li>
+                <li><a href="https://linkedin.com" target="_blank">LinkedIn</a></li>
+                <li><a href="https://youtube.com" target="_blank">YouTube</a></li>
+            </ul>
+        </section>
     </div>
 
     <footer>
@@ -267,21 +279,15 @@
     <script>
         function toggleTheme() {
             const root = document.documentElement;
-            const currentTheme = root.style.getPropertyValue('--background-light');
-            if (currentTheme) {
-                root.style.setProperty('--background-light', '');
-                root.style.setProperty('--text-light', '');
-                root.style.setProperty('--section-bg-light', '');
-                root.style.setProperty('--background-dark', 'linear-gradient(135deg, #1e1e1e, #333)');
-                root.style.setProperty('--text-dark', '#f4f4f9');
-                root.style.setProperty('--section-bg-dark', 'rgba(50, 50, 50, 0.9)');
+            const currentTheme = getComputedStyle(root).getPropertyValue('--background-light');
+            if (currentTheme.trim() === 'linear-gradient(135deg, #6c63ff, #f4f4f9)') {
+                root.style.setProperty('--background-light', 'linear-gradient(135deg, #1e1e1e, #333)');
+                root.style.setProperty('--text-light', '#f4f4f9');
+                root.style.setProperty('--section-bg-light', 'rgba(50, 50, 50, 0.85)');
             } else {
                 root.style.setProperty('--background-light', 'linear-gradient(135deg, #6c63ff, #f4f4f9)');
                 root.style.setProperty('--text-light', '#333');
-                root.style.setProperty('--section-bg-light', 'rgba(255, 255, 255, 0.9)');
-                root.style.setProperty('--background-dark', '');
-                root.style.setProperty('--text-dark', '');
-                root.style.setProperty('--section-bg-dark', '');
+                root.style.setProperty('--section-bg-light', 'rgba(255, 255, 255, 0.85)');
             }
         }
     </script>
