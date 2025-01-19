@@ -4,108 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Interactive Portfolio</title>
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            background-color: #282c34;
-            font-family: Arial, sans-serif;
-            color: white;
-        }
-
-        canvas {
-            display: block;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 10px 20px;
-            display: flex;
-            justify-content: center;
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
-            z-index: 1;
-        }
-
-        nav ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-        }
-
-        nav ul li {
-            margin: 0 15px;
-        }
-
-        nav ul li a {
-            text-decoration: none;
-            color: white;
-            font-size: 18px;
-            transition: color 0.3s;
-        }
-
-        nav ul li a:hover {
-            color: #1abc9c;
-        }
-
-        header {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-        }
-
-        header h1 {
-            font-size: 3rem;
-            margin: 0;
-            animation: fadeIn 2s ease;
-        }
-
-        header p {
-            font-size: 1.5rem;
-            margin: 10px 0;
-            animation: fadeIn 2s ease 0.5s;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        .interactive-cursor {
-            width: 10px;
-            height: 10px;
-            background-color: #1abc9c;
-            border-radius: 50%;
-            position: absolute;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            animation: grow 1s infinite alternate;
-        }
-
-        @keyframes grow {
-            from {
-                transform: translate(-50%, -50%) scale(1);
-            }
-            to {
-                transform: translate(-50%, -50%) scale(1.5);
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="./Site Data/CSS/Homepage.css">
 </head>
 <body>
     <canvas id="bouncingBallCanvas"></canvas>
@@ -115,7 +14,7 @@
             <li><a href="#home">Home</a></li>
             <li><a href="./BlogPage.html">Blogs</a></li>
             <li><a href="#projects">Projects</a></li>
-            <li><a href="./Portfolio/Portfolio.html">About Me</a></li>
+            <li><a href="./Site Data/Portfolio.html">About Me</a></li>
         </ul>
     </nav>
 
@@ -126,106 +25,6 @@
 
     <div class="interactive-cursor" id="cursor"></div>
 
-    <script>
-        const canvas = document.getElementById('bouncingBallCanvas');
-        const ctx = canvas.getContext('2d');
-        const cursor = document.getElementById('cursor');
-
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        const balls = [];
-        const isMobile = /Mobi|Android/i.test(navigator.userAgent);
-        const ballCount = isMobile ? 15 : 30; // Fewer balls on mobile
-        const maxSpeed = isMobile ? 2 : 4; // Slower movement on mobile
-
-        function createBall(x, y, radius, dx, dy, color) {
-            return { x, y, radius, dx, dy, color };
-        }
-
-        function randomColor() {
-            return `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
-        }
-
-        function randomBall() {
-            const radius = Math.random() * 20 + 10;
-            const x = Math.random() * (canvas.width - 2 * radius) + radius;
-            const y = Math.random() * (canvas.height - 2 * radius) + radius;
-            const dx = (Math.random() - 0.5) * maxSpeed;
-            const dy = (Math.random() - 0.5) * maxSpeed;
-            const color = randomColor();
-            return createBall(x, y, radius, dx, dy, color);
-        }
-
-        function drawBall(ball) {
-            ctx.beginPath();
-            ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
-            ctx.fillStyle = ball.color;
-            ctx.fill();
-            ctx.closePath();
-        }
-
-        function updateBallPosition(ball) {
-            ball.x += ball.dx;
-            ball.y += ball.dy;
-
-            if (ball.x + ball.radius > canvas.width || ball.x - ball.radius < 0) {
-                ball.dx *= -1;
-            }
-
-            if (ball.y + ball.radius > canvas.height || ball.y - ball.radius < 0) {
-                ball.dy *= -1;
-            }
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            balls.forEach(ball => {
-                drawBall(ball);
-                updateBallPosition(ball);
-            });
-
-            requestAnimationFrame(animate);
-        }
-
-        for (let i = 0; i < ballCount; i++) {
-            balls.push(randomBall());
-        }
-
-        animate();
-
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-
-        // Handle touch events
-        canvas.addEventListener('touchstart', (e) => {
-            isTouching = true;
-            touchStartTime = Date.now();
-        });
-
-        canvas.addEventListener('touchend', (e) => {
-            const touchDuration = Date.now() - touchStartTime;
-
-            if (isTouching && touchDuration < 200) {
-                // Treat as a tap
-                const rect = canvas.getBoundingClientRect();
-                const touch = e.changedTouches[0];
-                const x = touch.clientX - rect.left;
-                const y = touch.clientY - rect.top;
-                balls.push(createBall(x, y, 15, Math.random() * maxSpeed - maxSpeed / 2, Math.random() * maxSpeed - maxSpeed / 2, randomColor()));
-            }
-
-            isTouching = false;
-        });
-
-        // Custom cursor
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = `${e.clientX}px`;
-            cursor.style.top = `${e.clientY}px`;
-        });
-    </script>
+    <script src="./Site Data/JS/Homepage.js"></script>
 </body>
 </html>
