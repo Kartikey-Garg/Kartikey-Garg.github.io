@@ -1,230 +1,348 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Interactive Portfolio</title>
+    <title>Portfolio</title>
     <style>
+        :root {
+            --background-light: linear-gradient(135deg, #6c63ff, #f4f4f9);
+            --background-dark: linear-gradient(135deg, #1e1e1e, #333);
+            --text-light: #333;
+            --text-dark: #f4f4f9;
+            --section-bg-light: rgba(255, 255, 255, 0.85);
+            --section-bg-dark: rgba(50, 50, 50, 0.85);
+            --link-light: #6c63ff;
+            --link-dark: #91a7ff;
+        }
+
         body {
-            margin: 0;
-            overflow: hidden;
-            background-color: #282c34;
-            font-family: Arial, sans-serif;
-            color: white;
-        }
-
-        canvas {
-            display: block;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 10px 20px;
-            display: flex;
-            justify-content: center;
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
-            z-index: 1;
-        }
-
-        nav ul {
-            list-style: none;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            display: flex;
-        }
-
-        nav ul li {
-            margin: 0 15px;
-        }
-
-        nav ul li a {
-            text-decoration: none;
-            color: white;
-            font-size: 18px;
-            transition: color 0.3s;
-        }
-
-        nav ul li a:hover {
-            color: #1abc9c;
+            box-sizing: border-box;
+            background: var(--background-light);
+            color: var(--text-light);
+            overflow-x: hidden;
+            transition: background 0.5s ease, color 0.5s ease;
+            line-height: 1.6;
         }
 
         header {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            background: #6c63ff;
+            color: white;
+            padding: 20px 0;
             text-align: center;
         }
 
         header h1 {
-            font-size: 3rem;
             margin: 0;
-            animation: fadeIn 2s ease;
+            font-size: 2.5rem;
         }
 
-        header p {
-            font-size: 1.5rem;
-            margin: 10px 0;
-            animation: fadeIn 2s ease 0.5s;
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+        section {
+            background: var(--section-bg-light);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            transition: background 0.5s ease;
+            position: relative;
         }
 
-        .interactive-cursor {
-            width: 10px;
-            height: 10px;
-            background-color: #1abc9c;
-            border-radius: 50%;
+        section h2 {
+            border-bottom: 2px solid #6c63ff;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .bio p, .achievements ul, .certifications ul, .interests ul, .contact p {
+            font-size: 1rem;
+        }
+
+        .achievements ul, .certifications ul, .interests ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .achievements li, .certifications li, .interests li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .achievements li::before, .certifications li::before, .interests li::before {
+            content: '\2022';
+            color: #6c63ff;
             position: absolute;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            animation: grow 1s infinite alternate;
+            left: 0;
         }
 
-        @keyframes grow {
-            from {
-                transform: translate(-50%, -50%) scale(1);
+        footer {
+            background: #6c63ff;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 20px;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .background-animation span {
+            position: absolute;
+            display: block;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            animation: floating 10s infinite ease-in-out;
+            border-radius: 50%;
+            opacity: 0.7;
+        }
+
+        .theme-toggle, .read-aloud, .stop-aloud {
+            position: fixed;
+            top: 20px;
+            background: #6c63ff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .theme-toggle {
+            right: 20px;
+        }
+
+        .read-aloud {
+            right: 140px;
+        }
+
+        .stop-aloud {
+            right: 260px;
+        }
+
+        .theme-toggle:hover, .read-aloud:hover, .stop-aloud:hover {
+            background: #574bdf;
+        }
+
+        a {
+            color: var(--link-light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        @keyframes floating {
+            0% {
+                transform: translateY(0) translateX(0);
             }
-            to {
-                transform: translate(-50%, -50%) scale(1.5);
+            50% {
+                transform: translateY(-20px) translateX(10px);
+            }
+            100% {
+                transform: translateY(0) translateX(0);
+            }
+        }
+
+        @keyframes walk {
+            0% {
+                left: -50px;
+            }
+            50% {
+                left: 50%;
+            }
+            100% {
+                left: 110%;
+            }
+        }
+
+        .walker {
+            position: absolute;
+            bottom: 0;
+            width: 30px;
+            height: 50px;
+            background: url('walker-icon.png') no-repeat center;
+            background-size: contain;
+            animation: walk 10s linear infinite;
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            section h2 {
+                font-size: 1.5rem;
             }
         }
     </style>
 </head>
-<body>
-    <canvas id="bouncingBallCanvas"></canvas>
 
-    <nav>
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#blogs">Blogs</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#about">About Me</a></li>
-        </ul>
-    </nav>
+<body>
+    <div class="background-animation">
+        <script>
+            for (let i = 0; i < 30; i++) {
+                const span = document.createElement('span');
+                const size = Math.random() * 60;
+                span.style.width = span.style.height = size + 'px';
+                span.style.top = Math.random() * innerHeight + 'px';
+                span.style.left = Math.random() * innerWidth + 'px';
+                span.style.background = `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 0.2)`;
+                span.style.animationDuration = Math.random() * 10 + 10 + 's';
+                span.style.animationDelay = Math.random() * 10 + 's';
+                document.querySelector('.background-animation').appendChild(span);
+            }
+        </script>
+    </div>
+
+    <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+    <button class="read-aloud" onclick="readAloud()">Play Read Aloud</button>
+    <button class="stop-aloud" onclick="stopAloud()">Stop Read Aloud</button>
 
     <header>
-        <h1>Welcome to My Portfolio</h1>
-        <p>Explore my projects, blogs, and more!</p>
+        <h1>Portfolio</h1>
     </header>
 
-    <div class="interactive-cursor" id="cursor"></div>
+    <div class="container">
+        <section id="bio" class="bio">
+            <h2>About Me</h2>
+            <p><img src="profile.jpg" alt="Your Picture" style="width:100px;height:auto;border-radius:50%;float:left;margin-right:15px;">Hello! I am John Doe, a Web Developer with a passion for creating user-friendly and visually appealing websites. I specialize in front-end development. Welcome to my portfolio!</p>
+        </section>
+
+        <section id="achievements" class="achievements">
+            <h2>Achievements</h2>
+            <ul>
+                <li>Developed a responsive e-commerce website with a 20% increase in user engagement.</li>
+                <li>Designed and implemented an accessibility-focused portfolio template.</li>
+                <li>Winner of the 2024 Web Design Challenge.</li>
+            </ul>
+        </section>
+
+        <section id="certifications" class="certifications">
+            <h2>Certifications</h2>
+            <ul>
+                <li>Certified Front-End Developer (W3Schools).</li>
+                <li>Advanced JavaScript Programming (Coursera).</li>
+                <li>Responsive Web Design (freeCodeCamp).</li>
+            </ul>
+        </section>
+
+        <section id="interests" class="interests">
+            <h2>Interests</h2>
+            <ul>
+                <li>Exploring UI/UX trends and innovations.</li>
+                <li>Photography and nature exploration.</li>
+                <li>Community workshops on web technologies.</li>
+            </ul>
+        </section>
+
+        <section id="contact" class="contact">
+            <h2>Contact</h2>
+            <p>Email: john.doe@example.com</p>
+            <p>Phone: +123456789</p>
+            <p>LinkedIn: <a href="#">John Doe's LinkedIn</a></p>
+        </section>
+
+        <section id="links" class="links">
+            <h2>Links</h2>
+            <ul>
+                <li><a href="https://credly.com" target="_blank">Credly</a></li>
+                <li><a href="https://linkedin.com" target="_blank">LinkedIn</a></li>
+                <li><a href="https://youtube.com" target="_blank">YouTube</a></li>
+            </ul>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 John Doe. All Rights Reserved.</p>
+    </footer>
 
     <script>
-        const canvas = document.getElementById('bouncingBallCanvas');
-        const ctx = canvas.getContext('2d');
-        const cursor = document.getElementById('cursor');
+        function toggleTheme() {
+            const root = document.documentElement;
+            const transitions = ["ease", "ease-in", "ease-out", "ease-in-out", "cubic-bezier(0.4, 0, 0.2, 1)"];
+            const currentBackground = getComputedStyle(root).getPropertyValue('--background-light').trim();
+            const randomTransition = transitions[Math.floor(Math.random() * transitions.length)];
+            document.body.style.transition = `background 1s ${randomTransition}, color 1s ${randomTransition}`;
 
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        const balls = [];
-        let isTouching = false;
-        let touchStartTime = 0;
-
-        function createBall(x, y, radius, dx, dy, color) {
-            return { x, y, radius, dx, dy, color };
-        }
-
-        function randomColor() {
-            return `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
-        }
-
-        function randomBall() {
-            const radius = Math.random() * 20 + 10;
-            const x = Math.random() * (canvas.width - 2 * radius) + radius;
-            const y = Math.random() * (canvas.height - 2 * radius) + radius;
-            const dx = (Math.random() - 0.5) * 4;
-            const dy = (Math.random() - 0.5) * 4;
-            const color = randomColor();
-            return createBall(x, y, radius, dx, dy, color);
-        }
-
-        function drawBall(ball) {
-            ctx.beginPath();
-            ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
-            ctx.fillStyle = ball.color;
-            ctx.fill();
-            ctx.closePath();
-        }
-
-        function updateBallPosition(ball) {
-            ball.x += ball.dx;
-            ball.y += ball.dy;
-
-            if (ball.x + ball.radius > canvas.width || ball.x - ball.radius < 0) {
-                ball.dx *= -1;
-            }
-
-            if (ball.y + ball.radius > canvas.height || ball.y - ball.radius < 0) {
-                ball.dy *= -1;
+            if (currentBackground === 'linear-gradient(135deg, #6c63ff, #f4f4f9)') {
+                root.style.setProperty('--background-light', 'linear-gradient(135deg, #1e1e1e, #333)');
+                root.style.setProperty('--text-light', '#f4f4f9');
+                root.style.setProperty('--section-bg-light', 'rgba(50, 50, 50, 0.85)');
+                root.style.setProperty('--link-light', '#91a7ff');
+            } else {
+                root.style.setProperty('--background-light', 'linear-gradient(135deg, #6c63ff, #f4f4f9)');
+                root.style.setProperty('--text-light', '#333');
+                root.style.setProperty('--section-bg-light', 'rgba(255, 255, 255, 0.85)');
+                root.style.setProperty('--link-light', '#6c63ff');
             }
         }
 
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let synth = window.speechSynthesis;
+        let utterance;
 
-            balls.forEach(ball => {
-                drawBall(ball);
-                updateBallPosition(ball);
+        function readAloud() {
+            const text = document.body.innerText;
+            if (!utterance) {
+                utterance = new SpeechSynthesisUtterance(text);
+                utterance.voice = synth.getVoices().find(voice => voice.lang.includes('en') && voice.name.includes('Male')) || null;
+                synth.speak(utterance);
+            }
+        }
+
+        function stopAloud() {
+            if (synth.speaking) {
+                synth.cancel();
+                utterance = null;
+            }
+        }
+
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+            alert('Right-Click is Disabled!');
+        });
+
+        window.onload = function () {
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => {
+                const randomColor = `hsl(${Math.random() * 360}, 100%, 85%)`;
+                section.style.background = randomColor;
+                const walker = document.createElement('div');
+                walker.classList.add('walker');
+                section.appendChild(walker);
             });
-
-            requestAnimationFrame(animate);
-        }
-
-        for (let i = 0; i < 30; i++) {
-            balls.push(randomBall());
-        }
-
-        animate();
-
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-
-        // Handle touch events
-        canvas.addEventListener('touchstart', (e) => {
-            isTouching = true;
-            touchStartTime = Date.now();
-        });
-
-        canvas.addEventListener('touchend', (e) => {
-            const touchDuration = Date.now() - touchStartTime;
-
-            if (isTouching && touchDuration < 200) {
-                // Treat as a tap
-                const rect = canvas.getBoundingClientRect();
-                const touch = e.changedTouches[0];
-                const x = touch.clientX - rect.left;
-                const y = touch.clientY - rect.top;
-                balls.push(createBall(x, y, 15, Math.random() * 4 - 2, Math.random() * 4 - 2, randomColor()));
-            }
-
-            isTouching = false;
-        });
-
-        // Custom cursor
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = `${e.clientX}px`;
-            cursor.style.top = `${e.clientY}px`;
-        });
+        };
     </script>
 </body>
+
 </html>
+
