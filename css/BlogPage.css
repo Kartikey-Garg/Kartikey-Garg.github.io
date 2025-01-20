@@ -65,6 +65,7 @@ nav ul li a:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     overflow: hidden;
     transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
 }
 
 .blog-card:hover {
@@ -103,4 +104,51 @@ nav ul li a:hover {
 
 .blog-card .content a:hover {
     text-decoration: underline;
+}
+
+.blog-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.3s ease;
+}
+
+.blog-modal-content {
+    background: #2e2e2e;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 800px;
+    width: 90%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    color: white;
+    position: relative;
+}
+
+.blog-modal .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.blog-modal .close-btn:hover {
+    color: #1abc9c;
+}
+
+.blog-modal:not(.hidden) {
+    visibility: visible;
+    opacity: 1;
 }

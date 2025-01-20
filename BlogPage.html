@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interactive Blog Page</title>
-    <link rel="stylesheet" href="./Site Data/CSS/BlogPage.css">
+    <link rel="stylesheet" href="./css/BlogPage.css">
 </head>
 <body>
     <canvas id="backgroundCanvas"></canvas>
@@ -19,8 +19,8 @@
     </nav>
 
     <div class="blog-container">
-        <div class="blog-card">
-            <img src="./Site Data/CSS/Images/Drake's Equation.jpg" alt="Blog 1">
+        <div class="blog-card" onclick="openBlog(1)">
+            <img src="./assets/images/Drake's Equation.jpg" alt="Blog 1">
             <div class="content">
                 <h2>Drake's Equation</h2>
                 <p>Source:- Wikipedia, Seti Institute, Self
@@ -44,11 +44,11 @@
                     This could be possible that they may see us what we was millions of years ago.
                     
                     Today if we talk about in terms of Civilization we are at 0.74 type of civilization and its logarithmic (By Kardashev Scale). </p>
-                <a href="#">Read More</a>
+                <a href="#" onclick="openBlog(1); event.stopPropagation();">Read More</a>
             </div>
         </div>
-        <div class="blog-card">
-            <img src="./Site Data/CSS/Images/Bootstrap Paradox.webp" alt="Blog 2">
+        <div class="blog-card" onclick="openBlog(2)">
+            <img src="./assets/images/Bootstrap Paradox.webp" alt="Blog 2">
             <div class="content">
                 <h2>Bootstrap Paradox</h2>
                 <p>In very simple words, its a theoretical Paradox . Lets understand by an example:-
@@ -59,11 +59,11 @@
                     You took an object in your present, travelled back in time and give that object to yourself.
                     Now logically the object is no longer with you cause you have given it in past but you will find that object in your present because you gave that object to yourself in past.
                     Now for that object no one can determine the time of origin because if in past at that time that object was not created and you gave it to yourself then it shows that the object is made before the actual formation of that object. This is contradicting and so one can not determine the time of its cretion because it was present when it ws not created</p>
-                <a href="#">Read More</a>
+                <a href="#" onclick="openBlog(2); event.stopPropagation();">Read More</a>
             </div>
         </div>
-        <div class="blog-card">
-            <img src="./Site Data/CSS/Images/Grandfather Paradox.webp" alt="Blog 3">
+        <div class="blog-card" onclick="openBlog(3)">
+            <img src="./assets/images/Grandfather Paradox.webp" alt="Blog 3">
             <div class="content">
                 <h2>GRANDFATHER PARADOX</h2>
                 <p>By the name it is clear that its something going to be related with ensistors & science 
@@ -75,11 +75,17 @@
                     This is the simplest way by which we can understand what is GRANDFATHER PARADOX
                     
                     A  Physicist John Garrison performed An experiment of sending a signal to turn off itself in time travel & he found that by travelling the signal in time them machine received that signal before he send it.</p>
-                <a href="#">Read More</a>
+                <a href="#" onclick="openBlog(3); event.stopPropagation();">Read More</a>
             </div>
         </div>
     </div>
+    <div id="blog-modal" class="blog-modal hidden">
+        <div class="blog-modal-content">
+            <button class="close-btn" onclick="closeBlog()">&times;</button>
+            <div id="blog-full-content"></div>
+        </div>
+    </div>
 
-    <script src="./Site Data/JS/BlogPage.js"></script>
+    <script src="./js/BlogPage.js"></script>
 </body>
 </html>
