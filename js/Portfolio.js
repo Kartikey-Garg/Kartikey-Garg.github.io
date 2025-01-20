@@ -1,27 +1,26 @@
-// Canvas background animation
+// Canvas background animation: Network Nodes
 const canvas = document.getElementById('backgroundCanvas');
 const ctx = canvas.getContext('2d');
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-const particles = [];
-const particleCount = 100;
+const nodes = [];
+const nodeCount = 100;
+const maxDistance = 150;
 
-class Particle {
-    constructor(x, y, radius, color, speedX, speedY) {
+class Node {
+    constructor(x, y, speedX, speedY) {
         this.x = x;
         this.y = y;
-        this.radius = radius;
-        this.color = color;
         this.speedX = speedX;
         this.speedY = speedY;
     }
 
     draw() {
         ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = this.color;
+        ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
         ctx.fill();
         ctx.closePath();
     }
@@ -30,11 +29,10 @@ class Particle {
         this.x += this.speedX;
         this.y += this.speedY;
 
-        if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
+        if (this.x > canvas.width || this.x < 0) {
             this.speedX *= -1;
         }
-
-        if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
+        if (this.y > canvas.height || this.y < 0) {
             this.speedY *= -1;
         }
 
@@ -42,84 +40,53 @@ class Particle {
     }
 }
 
-function initParticles() {
-    for (let i = 0; i < particleCount; i++) {
-        const radius = Math.random() * 5 + 2;
-        const x = Math.random() * canvas.width;
-        const y = Math.random() * canvas.height;
-        const speedX = (Math.random() - 0.5) * 2;
-        const speedY = (Math.random() - 0.5) * 2;
-        const color = `rgba(255, 255, 255, ${Math.random()})`;
-        particles.push(new Particle(x, y, radius, color, speedX, speedY));
+function connectNodes() {
+    for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+            const distance = Math.sqrt(
+                (nodes[i].x - nodes[j].x) ** 2 + (nodes[i].y - nodes[j].y) ** 2
+            );
+
+            if (distance < maxDistance) {
+                ctx.beginPath();
+                ctx.moveTo(nodes[i].x, nodes[i].y);
+                ctx.lineTo(nodes[j].x, nodes[j].y);
+                ctx.strokeStyle = `rgba(255, 255, 255, ${1 - distance / maxDistance})`;
+                ctx.lineWidth = 0.5;
+                ctx.stroke();
+                ctx.closePath();
+            }
+        }
     }
 }
 
-function animateParticles() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    particles.forEach((particle) => {
-        particle.update();
-    });
-
-    requestAnimationFrame(animateParticles);
+function initNodes() {
+    for (let i = 0; i < nodeCount; i++) {
+        const x = Math.random() * canvas.width;
+        const y = Math.random() * canvas.height;
+        const speedX = (Math.random() - 0.5) * 0.5;
+        const speedY = (Math.random() - 0.5) * 0.5;
+        nodes.push(new Node(x, y, speedX, speedY));
+    }
 }
 
-initParticles();
-animateParticles();
+function animateNodes() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    nodes.forEach((node) => node.update());
+    connectNodes();
+
+    requestAnimationFrame(animateNodes);
+}
+
+// Handle responsive canvas
 window.addEventListener('resize', () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    particles.length = 0;
-    initParticles();
+    nodes.length = 0;
+    initNodes();
 });
 
-// Dynamic content loading
-const certificationsContainer = document.getElementById('certifications');
-const workExperienceContainer = document.getElementById('work-experience');
-
-// Mock dynamic data for certifications and work experience
-const certifications = [
-    { title: "Certified JavaScript Developer", issuer: "CertifyMe", date: "Jan 2025" },
-    { title: "Full-Stack Web Development", issuer: "CodeCamp", date: "Dec 2024" },
-    { title: "React Specialist", issuer: "ReactAcademy", date: "Nov 2024" },
-];
-
-const workExperience = [
-    { position: "Software Engineer", company: "Tech Solutions Inc.", duration: "2023 - Present" },
-    { position: "Web Developer Intern", company: "Startup Hub", duration: "2022 - 2023" },
-];
-
-// Populate certifications
-function loadCertifications() {
-    certificationsContainer.innerHTML = certifications
-        .map(
-            (cert) => `
-            <div class="cert-item">
-                <h4>${cert.title}</h4>
-                <p>${cert.issuer} - ${cert.date}</p>
-            </div>
-        `
-        )
-        .join('');
-}
-
-// Populate work experience
-function loadWorkExperience() {
-    workExperienceContainer.innerHTML = workExperience
-        .map(
-            (job) => `
-            <div class="work-item">
-                <h4>${job.position}</h4>
-                <p>${job.company} (${job.duration})</p>
-            </div>
-        `
-        )
-        .join('');
-}
-
-// Load data on page load
-document.addEventListener('DOMContentLoaded', () => {
-    loadCertifications();
-    loadWorkExperience();
-});
+// Initialize and animate
+initNodes();
+animateNodes();
