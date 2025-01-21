@@ -1,6 +1,7 @@
 const messagesContainer = document.getElementById("messages");
 const userInput = document.getElementById("user-input");
 const sendButton = document.getElementById("send-button");
+const secret = process.env.WEBSITECHATBOT;
 
 let generator;
 
@@ -25,7 +26,7 @@ async function generateResponse(userMessage) {
     try {
         const response = await fetch("https://api-inference.huggingface.co/models/gpt2", {
             method: "POST",
-            headers: { Authorization: "Bearer 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" },
+            headers: { Authorization: "Bearer ${secret}" },
             body: JSON.stringify({ inputs: userMessage }),
         });
 
