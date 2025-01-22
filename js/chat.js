@@ -1,14 +1,6 @@
 const messagesContainer = document.getElementById("messages");
 const userInput = document.getElementById("user-input");
 const sendButton = document.getElementById("send-button");
-const secret = process.env.WEBSITECHATBOT;
-
-let generator;
-
-// Load the model from Hugging Face's API
-async function loadModel() {
-    console.log("Model ready for API usage");
-}
 
 // Display a message in the chat interface
 function displayMessage(message, sender) {
@@ -24,10 +16,16 @@ async function generateResponse(userMessage) {
     displayMessage("Thinking...", "ai");
 
     try {
+        // Fetch the API key dynamically from config.json
+        const configResponse = await fetch("config.json");
+        const config = await configResponse.json();
+        const apiKey = config.apiKey;
+
+        // Send the user input to Hugging Face's API
         const response = await fetch("https://api-inference.huggingface.co/models/gpt2", {
             method: "POST",
-            headers: { Authorization: "Bearer ${apiKey}" },
-            body: JSON.stringify({ inputs: userMessage }), 
+            headers: { Authorization: `Bearer ${apiKey}` },
+            body: JSON.stringify({ inputs: userMessage }),
         });
 
         if (!response.ok) {
@@ -60,5 +58,5 @@ userInput.addEventListener("keypress", (event) => {
     if (event.key === "Enter") sendMessage();
 });
 
-// Initialize model loading
-loadModel();
+// Initialization message
+console.log("Chat interface is ready for use.");
