@@ -7,16 +7,37 @@
     <link rel="stylesheet" href="./css/chat.css">
 </head>
 <body>
-    <canvas id="particleNetworkCanvas"></canvas>
-    <div id="chat-container">
-        <div id="chatbox">
+    <canvas id="backgroundCanvas"></canvas>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="blogs.html">Blogs</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="about.html">About Me</a></li>
+            <li><a href="ai-chat.html">AI Chat</a></li>
+        </ul>
+    </nav>
+
+    <header class="ai-chat-header">
+        <h1>AI Chat</h1>
+        <p>Ask me anything! Let’s chat.</p>
+    </header>
+
+    <main>
+        <div id="chat-container">
             <div id="messages"></div>
             <div id="input-container">
-                <input type="text" id="user-input" placeholder="Ask me anything...">
+                <input id="user-input" type="text" placeholder="Type your message here...">
                 <button id="send-button">Send</button>
             </div>
         </div>
-    </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Your Name | <a href="https://github.com/kartikey-garg">GitHub Profile</a></p>
+    </footer>
+
     <script src="./js/chat.js"></script>
 </body>
 </html>
