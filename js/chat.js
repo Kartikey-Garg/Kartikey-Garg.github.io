@@ -1,77 +1,108 @@
-const messagesContainer = document.getElementById("messages");
-const userInput = document.getElementById("user-input");
-const sendButton = document.getElementById("send-button");
+document.addEventListener("DOMContentLoaded", () => {
+    const messagesContainer = document.getElementById("messages");
+    const userInput = document.getElementById("user-input");
+    const sendButton = document.getElementById("send-button");
+    const canvas = document.getElementById("backgroundCanvas");
 
-let apiKey = ""; // Will be loaded from config.json
+    // Ensure canvas initialization
+    if (canvas) {
+        const ctx = canvas.getContext("2d");
 
-// Load the API key from config.json
-async function loadConfig() {
-    try {
-        const response = await fetch('./config.json');
-        if (!response.ok) {
-            throw new Error('Failed to load config.json');
-        }
-        const config = await response.json();
-        apiKey = config.apiKey;
-        console.log("API Key loaded successfully");
-    } catch (error) {
-        console.error("Error loading API key:", error);
-        displayMessage("Error: Unable to load API key. Please check the configuration.", "ai");
-    }
-}
-
-// Display a message in the chat interface
-function displayMessage(message, sender) {
-    const messageDiv = document.createElement("div");
-    messageDiv.classList.add("message", sender);
-    messageDiv.textContent = message;
-    messagesContainer.appendChild(messageDiv);
-    messagesContainer.scrollTop = messagesContainer.scrollHeight;
-}
-
-// Generate AI response using Hugging Face's Inference API
-async function generateResponse(userMessage) {
-    displayMessage("Thinking...", "ai");
-
-    try {
-        const response = await fetch("https://api-inference.huggingface.co/models/gpt2", {
-            method: "POST",
-            headers: {
-                Authorization: `Bearer ${apiKey}`,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ inputs: userMessage }),
-        });
-
-        if (!response.ok) {
-            throw new Error("Error generating response: " + response.statusText);
+        if (!ctx) {
+            console.error("Canvas context is null. Check if the canvas element exists in the DOM.");
+            return;
         }
 
-        const data = await response.json();
-        const aiMessage = data.generated_text || "I'm sorry, I couldn't process that.";
-        displayMessage(aiMessage, "ai");
-    } catch (error) {
-        console.error("Error generating response:", error);
-        displayMessage("An error occurred while fetching the response. Please try again.", "ai");
+        // Set canvas dimensions
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Create simple animation for the background
+        function animateBackground() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            gradient.addColorStop(0, "#6D83F2");
+            gradient.addColorStop(1, "#B0C4F6");
+
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            requestAnimationFrame(animateBackground);
+        }
+
+        animateBackground();
+    } else {
+        console.error("Canvas element with id 'backgroundCanvas' not found.");
     }
-}
 
-// Handle user input
-function sendMessage() {
-    const userMessage = userInput.value.trim();
-    if (!userMessage) return;
+    // Function to display messages in the chat
+    function displayMessage(message, sender) {
+        const messageDiv = document.createElement("div");
+        messageDiv.classList.add("message", sender);
+        messageDiv.textContent = message;
+        messagesContainer.appendChild(messageDiv);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
 
-    displayMessage(userMessage, "user");
-    userInput.value = "";
+    // Function to fetch API key securely from the config file
+    async function getApiKey() {
+        try {
+            const response = await fetch("config.json");
+            const config = await response.json();
+            return config.apiKey;
+        } catch (error) {
+            console.error("Error loading API key from config.json:", error);
+            return null;
+        }
+    }
 
-    generateResponse(userMessage);
-}
+    // Function to generate AI response using Hugging Face API
+    async function generateResponse(userMessage) {
+        displayMessage("Thinking...", "ai");
 
-// Event listeners
-sendButton.addEventListener("click", sendMessage);
-userInput.addEventListener("keypress", (event) => {
-    if (event.key === "Enter") sendMessage();
+        const apiKey = await getApiKey();
+        if (!apiKey) {
+            displayMessage("Error: API key not found. Please check your configuration.", "ai");
+            return;
+        }
+
+        try {
+            const response = await fetch("https://api-inference.huggingface.co/models/gpt2", {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${apiKey}`,
+                },
+                body: JSON.stringify({ inputs: userMessage }),
+            });
+
+            if (!response.ok) {
+                throw new Error("Error generating response: " + response.statusText);
+            }
+
+            const data = await response.json();
+            const aiMessage = data.generated_text || "I'm sorry, I couldn't process that.";
+            displayMessage(aiMessage, "ai");
+        } catch (error) {
+            console.error("Error generating response:", error);
+            displayMessage("An error occurred while fetching the response.", "ai");
+        }
+    }
+
+    // Function to handle user input
+    function sendMessage() {
+        const userMessage = userInput.value.trim();
+        if (!userMessage) return;
+
+        displayMessage(userMessage, "user");
+        userInput.value = "";
+
+        generateResponse(userMessage);
+    }
+
+    // Event listeners
+    sendButton.addEventListener("click", sendMessage);
+    userInput.addEventListener("keypress", (event) => {
+        if (event.key === "Enter") sendMessage();
+    });
 });
-
-// Initialize: Load the config and prepare for interaction
-loadConfig();
