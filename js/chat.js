@@ -26,8 +26,8 @@ async function generateResponse(userMessage) {
     try {
         const response = await fetch("https://api-inference.huggingface.co/models/gpt2", {
             method: "POST",
-            headers: { Authorization: "Bearer ${secret}" },
-            body: JSON.stringify({ inputs: userMessage }),
+            headers: { Authorization: "Bearer ${apiKey}" },
+            body: JSON.stringify({ inputs: userMessage }), 
         });
 
         if (!response.ok) {
