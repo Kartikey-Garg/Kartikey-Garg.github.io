@@ -104,11 +104,11 @@ header.ai-chat-header p {
 }
 
 /* Background animation styles */
-canvas#backgroundCanvas {
-    position: fixed;
+#backgroundCanvas {
+    position: absolute;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
     z-index: -1;
-}
+} /* Ensure it stays behind other elements */
