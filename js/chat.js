@@ -17,9 +17,18 @@ async function generateResponse(userMessage) {
 
     try {
         // Fetch the API key dynamically from config.json
-        const configResponse = await fetch("config.json");
-        const config = await configResponse.json();
-        const apiKey = config.apiKey;
+        let apiKey;
+        try {
+            const configResponse = await fetch("/config.json");
+            if (!configResponse.ok) {
+                throw new Error("config.json not found");
+            }
+            const config = await configResponse.json();
+            apiKey = config.apiKey;
+        } catch (error) {
+            console.warn("Using fallback API key");
+            apiKey = "your-fallback-api-key"; // Replace with a fallback API key or handle appropriately
+        }
 
         // Send the user input to Hugging Face's API
         const response = await fetch("https://api-inference.huggingface.co/models/gpt2", {
