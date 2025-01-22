@@ -1,27 +1,24 @@
-name: Deploy Static Website with Secrets
+name: Deploy Website with API Key Injection
 
 on:
   push:
     branches:
-      - main  # Trigger on pushes to the main branch
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the repository
-      - name: Checkout Code
-        uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-      # Step 2: Inject API Key into a config file
-      - name: Create Config File
-        run: |
-          echo '{ "apiKey": "${{ secrets.WEBSITECHATBOT }}" }' > config.json
+    - name: Inject API Key into Config
+      run: |
+        echo "{ \"apiKey\": \"${{ secrets.HUGGINGFACE_API_KEY }}\" }" > config.json
 
-      # Step 3: Deploy to GitHub Pages
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: . # The directory containing your website files

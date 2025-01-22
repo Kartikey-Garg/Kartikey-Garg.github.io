@@ -1,95 +1,75 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const messagesContainer = document.getElementById("messages");
-    const userInput = document.getElementById("user-input");
-    const sendButton = document.getElementById("send-button");
-    const canvas = document.getElementById("backgroundCanvas");
+const messagesContainer = document.getElementById("messages");
+const userInput = document.getElementById("user-input");
+const sendButton = document.getElementById("send-button");
 
-    let apiKey = ""; // Replace with your API key directly for now.
+let apiKey = "";
 
-    // Initialize the canvas
-    if (canvas) {
-        const ctx = canvas.getContext("2d");
-        if (!ctx) {
-            console.error("Canvas context is null. Check if the canvas element exists in the DOM.");
-            return;
+// Fetch API key from config.json
+async function loadConfig() {
+    try {
+        const response = await fetch("config.json");
+        const config = await response.json();
+        apiKey = config.apiKey;
+    } catch (error) {
+        console.error("Error loading config.json:", error);
+        displayMessage("Error: Unable to load API key. Please check the configuration.", "ai");
+    }
+}
+
+// Display a message in the chat interface
+function displayMessage(message, sender) {
+    const messageDiv = document.createElement("div");
+    messageDiv.classList.add("message", sender);
+    messageDiv.textContent = message;
+    messagesContainer.appendChild(messageDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+// Generate AI response using Hugging Face's Inference API
+async function generateResponse(userMessage) {
+    if (!apiKey) {
+        displayMessage("Error: API key not loaded.", "ai");
+        return;
+    }
+
+    displayMessage("Thinking...", "ai");
+
+    try {
+        const response = await fetch("https://api-inference.huggingface.co/models/gpt2", {
+            method: "POST",
+            headers: { Authorization: `Bearer ${apiKey}` },
+            body: JSON.stringify({ inputs: userMessage }),
+        });
+
+        if (!response.ok) {
+            throw new Error("Error generating response: " + response.statusText);
         }
 
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        // Create gradient animation for the canvas
-        let colorOffset = 0;
-
-        function animateBackground() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-            gradient.addColorStop(0, `hsl(${colorOffset}, 100%, 70%)`);
-            gradient.addColorStop(1, `hsl(${colorOffset + 60}, 100%, 80%)`);
-
-            ctx.fillStyle = gradient;
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            colorOffset += 0.5;
-            if (colorOffset > 360) colorOffset = 0;
-
-            requestAnimationFrame(animateBackground);
-        }
-
-        animateBackground();
-    } else {
-        console.error("Canvas element with id 'backgroundCanvas' not found.");
+        const data = await response.json();
+        const aiMessage = data.generated_text || "I'm sorry, I couldn't process that.";
+        displayMessage(aiMessage, "ai");
+    } catch (error) {
+        console.error(error);
+        displayMessage("An error occurred while fetching the response.", "ai");
     }
+}
 
-    // Function to display chat messages
-    function displayMessage(message, sender) {
-        const messageDiv = document.createElement("div");
-        messageDiv.classList.add("message", sender);
-        messageDiv.textContent = message;
-        messagesContainer.appendChild(messageDiv);
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-    }
+// Handle user input
+function sendMessage() {
+    const userMessage = userInput.value.trim();
+    if (!userMessage) return;
 
-    // Generate AI response using Hugging Face API
-    async function generateResponse(userMessage) {
-        displayMessage("Thinking...", "ai");
+    displayMessage(userMessage, "user");
+    userInput.value = "";
 
-        try {
-            const response = await fetch("https://api-inference.huggingface.co/models/gpt2", {
-                method: "POST",
-                headers: {
-                    Authorization: `Bearer ${apiKey}`,
-                },
-                body: JSON.stringify({ inputs: userMessage }),
-            });
+    generateResponse(userMessage);
+}
 
-            if (!response.ok) {
-                throw new Error("Error generating response: " + response.statusText);
-            }
-
-            const data = await response.json();
-            const aiMessage = data.generated_text || "I'm sorry, I couldn't process that.";
-            displayMessage(aiMessage, "ai");
-        } catch (error) {
-            console.error("Error generating response:", error);
-            displayMessage("An error occurred while fetching the response.", "ai");
-        }
-    }
-
-    // Handle user input
-    function sendMessage() {
-        const userMessage = userInput.value.trim();
-        if (!userMessage) return;
-
-        displayMessage(userMessage, "user");
-        userInput.value = "";
-
-        generateResponse(userMessage);
-    }
-
-    // Event listeners
-    sendButton.addEventListener("click", sendMessage);
-    userInput.addEventListener("keypress", (event) => {
-        if (event.key === "Enter") sendMessage();
-    });
+// Event listeners
+sendButton.addEventListener("click", sendMessage);
+userInput.addEventListener("keypress", (event) => {
+    if (event.key === "Enter") sendMessage();
 });
+
+// Initialize by loading the config
+loadConfig();
