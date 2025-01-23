@@ -7,39 +7,20 @@
   <link rel="stylesheet" href="/css/chat.css">
 </head>
 <body>
-  <!-- Menu Bar -->
-  <nav>
-    <ul class="menu">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="projects.html">Projects</a></li>
-      <li><a href="blog.html">Blog</a></li>
-      <li><a href="#" class="active">AI Chat</a></li>
-    </ul>
-  </nav>
-
-  <!-- Main Content -->
-  <main>
-    <div class="chat-container">
-      <h2>AI Chat</h2>
-      <div id="chat-box">
-        <!-- Chat messages will appear here -->
-      </div>
-      <input type="text" id="chat-input" placeholder="Type a message...">
-      <button id="send-btn">Send</button>
-    </div>
-  </main>
-
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <p>&copy; 2025 Kartikey Garg. All rights reserved.</p>
-    </div>
-  </footer>
-
-  <!-- Background Animation -->
+  <div class="menu-bar">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
   <canvas id="background-animation"></canvas>
-
-  <!-- Scripts -->
+  <div class="chat-container">
+    <h1>AI Chat</h1>
+    <div id="chat-box"></div>
+    <div class="input-container">
+      <input type="text" id="user-input" placeholder="Type your message here...">
+      <button id="send-button">Send</button>
+    </div>
+  </div>
   <script src="/js/chat.js"></script>
 </body>
 </html>
