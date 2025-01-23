@@ -4,40 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Chat</title>
-    <link rel="stylesheet" href="css/chat.css"> <!-- Ensure this path is correct -->
+    <link rel="stylesheet" href="/css/chat.css">
 </head>
 <body>
+    <!-- Background Animation -->
     <canvas id="background-animation"></canvas>
 
-    <nav>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="blogs.html">Blogs</a></li>
-            <li><a href="projects.html">Projects</a></li>
-            <li><a href="about.html">About Me</a></li>
-            <li><a href="ai-chat.html">AI Chat</a></li>
-        </ul>
-    </nav>
-
-    <header class="ai-chat-header">
+    <!-- Chat Interface -->
+    <div id="chat-interface">
         <h1>AI Chat</h1>
-        <p>Ask me anything! Let’s chat.</p>
-    </header>
-
-    <main>
-        <div id="chat-interface">
-            <div id="messages"></div>
-            <div id="input-area">
-                <input id="user-input" type="text" placeholder="Type your message here...">
-                <button id="send-button">Send</button>
-            </div>
+        <div id="messages"></div>
+        <div id="input-area">
+            <input id="user-input" type="text" placeholder="Type your message here..." />
+            <button id="send-button">Send</button>
         </div>
-    </main>
+    </div>
 
-    <footer>
-        <p>&copy; 2025 Your Name | <a href="https://github.com/kartikey-garg">GitHub Profile</a></p>
-    </footer>
-
-    <script src="js/chat.js"></script> <!-- Ensure this path is correct -->
+    <!-- Script -->
+    <script src="/js/chat.js"></script>
 </body>
 </html>
