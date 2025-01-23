@@ -15,10 +15,10 @@ jobs:
 
     - name: Inject API Key into Config
       run: |
-        echo "{ \"apiKey\": \"${{ secrets.HUGGINGFACE_API_KEY }}\" }" > config.json
+        echo "{ \"apiKey\": \"${{ secrets.WEBSITECHATBOT }}\" }" > config.json
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: . # The directory containing your website files
+        publish_dir: ./ # Adjust to the folder containing your website files
