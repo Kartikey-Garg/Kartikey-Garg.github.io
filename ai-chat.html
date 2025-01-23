@@ -1,26 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Chat</title>
-    <link rel="stylesheet" href="/css/chat.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Chat</title>
+  <link rel="stylesheet" href="chat.css">
 </head>
 <body>
-    <!-- Background Animation -->
-    <canvas id="background-animation"></canvas>
+  <!-- Menu Bar -->
+  <nav>
+    <ul class="menu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="ai-chat.html" class="active">AI Chat</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
 
-    <!-- Chat Interface -->
-    <div id="chat-interface">
-        <h1>AI Chat</h1>
-        <div id="messages"></div>
-        <div id="input-area">
-            <input id="user-input" type="text" placeholder="Type your message here..." />
-            <button id="send-button">Send</button>
-        </div>
+  <!-- Main Content -->
+  <main>
+    <div class="chat-container">
+      <h2>AI Chat</h2>
+      <div id="chat-box">
+        <!-- Chat messages will appear here -->
+      </div>
+      <input type="text" id="chat-input" placeholder="Type a message...">
+      <button id="send-btn">Send</button>
     </div>
+  </main>
 
-    <!-- Script -->
-    <script src="/js/chat.js"></script>
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 My Website. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Background Animation -->
+  <canvas id="background-animation"></canvas>
+
+  <!-- Scripts -->
+  <script src="chat.js"></script>
 </body>
 </html>
