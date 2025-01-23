@@ -13,6 +13,34 @@ body {
     z-index: -1;
 }
 
+nav {
+    background-color: #333;
+    color: white;
+    padding: 1em;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 1em;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+header.ai-chat-header {
+    text-align: center;
+    padding: 2em 0;
+    background-color: #4CAF50;
+    color: white;
+}
+
 #chat-interface {
     position: relative;
     margin: 50px auto;
@@ -78,4 +106,14 @@ body {
 
 #send-button:hover {
     background-color: #1976d2;
+}
+
+footer {
+    text-align: center;
+    padding: 1em 0;
+    background-color: #333;
+    color: white;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
 }
