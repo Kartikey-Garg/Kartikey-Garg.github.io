@@ -77,7 +77,8 @@ class Particle {
         this.x += this.speedX;
         this.y += this.speedY;
 
-        if (this.size > 0.2) this.size -= 0.1;
+        // Reduce size slightly, but keep particles alive longer
+        if (this.size > 0.5) this.size -= 0.05; 
     }
 
     draw() {
@@ -89,43 +90,54 @@ class Particle {
     }
 }
 
-// Handle particle animation
+// Initialize particles
 function initParticles() {
     for (let i = 0; i < 100; i++) {
-        const size = Math.random() * 5 + 1;
-        const x = Math.random() * canvas.width;
-        const y = Math.random() * canvas.height;
-        const speedX = Math.random() * 2 - 1;
-        const speedY = Math.random() * 2 - 1;
-
-        particlesArray.push(new Particle(x, y, size, speedX, speedY));
+        addParticle();
     }
 }
 
+// Add a new particle
+function addParticle() {
+    const size = Math.random() * 5 + 1;
+    const x = Math.random() * canvas.width;
+    const y = Math.random() * canvas.height;
+    const speedX = Math.random() * 1 - 0.5; // Slower horizontal movement
+    const speedY = Math.random() * 1 - 0.5; // Slower vertical movement
+
+    particlesArray.push(new Particle(x, y, size, speedX, speedY));
+}
+
+// Handle particle animation
 function handleParticles() {
     for (let i = 0; i < particlesArray.length; i++) {
         particlesArray[i].update();
         particlesArray[i].draw();
 
-        if (particlesArray[i].size <= 0.3) {
+        // Remove particles that shrink to near zero size and regenerate
+        if (particlesArray[i].size <= 0.5) {
             particlesArray.splice(i, 1);
+            addParticle(); // Replace with a new particle
             i--;
         }
     }
 }
 
+// Animation loop
 function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     handleParticles();
     requestAnimationFrame(animate);
 }
 
+// Handle window resize
 window.addEventListener("resize", () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    initParticles();
+    particlesArray.length = 0; // Clear current particles
+    initParticles(); // Reinitialize particles
 });
 
-// Initialize particles and start animation
+// Start animation
 initParticles();
 animate();
