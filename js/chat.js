@@ -28,48 +28,66 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   
     // Background Animation
-    const canvas = document.getElementById("background-animation");
-    const ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  
-    const particles = [];
-    const particleCount = 100;
-  
-    function createParticles() {
-      for (let i = 0; i < particleCount; i++) {
-        particles.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          size: Math.random() * 2,
-          speedX: Math.random() * 2 - 1,
-          speedY: Math.random() * 2 - 1,
-        });
-      }
+const canvas = document.getElementById("background-animation");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const particles = [];
+const particleCount = 100;
+
+function createParticle() {
+  return {
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    size: Math.random() * 5 + 2, // Larger initial size
+    speedX: Math.random() * 2 - 1,
+    speedY: Math.random() * 2 - 1,
+    shrinkRate: Math.random() * 0.05 + 0.01, // Rate at which the particle shrinks
+  };
+}
+
+function createParticles() {
+  for (let i = 0; i < particleCount; i++) {
+    particles.push(createParticle());
+  }
+}
+
+function animateParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  particles.forEach((particle, index) => {
+    // Update position
+    particle.x += particle.speedX;
+    particle.y += particle.speedY;
+
+    // Shrink size
+    particle.size -= particle.shrinkRate;
+
+    // If the particle is too small, replace it with a new one
+    if (particle.size <= 0) {
+      particles[index] = createParticle();
     }
-  
-    function animateParticles() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach((particle) => {
-        particle.x += particle.speedX;
-        particle.y += particle.speedY;
-  
-        if (particle.x < 0 || particle.x > canvas.width) particle.speedX *= -1;
-        if (particle.y < 0 || particle.y > canvas.height) particle.speedY *= -1;
-  
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-        ctx.fillStyle = "#00ffcc";
-        ctx.fill();
-      });
-      requestAnimationFrame(animateParticles);
-    }
-  
-    window.addEventListener("resize", () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    });
-  
-    createParticles();
-    animateParticles();
+
+    // Bounce off edges
+    if (particle.x < 0 || particle.x > canvas.width) particle.speedX *= -1;
+    if (particle.y < 0 || particle.y > canvas.height) particle.speedY *= -1;
+
+    // Draw particle
+    ctx.beginPath();
+    ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+    ctx.fillStyle = "#00ffcc";
+    ctx.fill();
   });
+
+  requestAnimationFrame(animateParticles);
+}
+
+window.addEventListener("resize", () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+
+createParticles();
+animateParticles();
+});
