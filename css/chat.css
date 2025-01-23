@@ -1,114 +1,79 @@
-/* General styles */
 body {
     margin: 0;
+    overflow: hidden;
     font-family: Arial, sans-serif;
-    color: white;
-    overflow: hidden;
 }
 
-nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    background-color: rgba(0, 0, 0, 0.8);
+#background-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
 }
 
-nav ul li {
-    margin: 0 15px;
-}
-
-nav ul li a {
-    text-decoration: none;
-    color: white;
-    font-size: 18px;
-}
-
-header.ai-chat-header {
-    text-align: center;
+#chat-interface {
+    position: relative;
+    margin: 50px auto;
     padding: 20px;
-    background-color: rgba(0, 0, 0, 0.7);
-}
-
-header.ai-chat-header h1 {
-    margin: 0;
-    font-size: 36px;
-}
-
-header.ai-chat-header p {
-    font-size: 16px;
-}
-
-/* Chat container */
-#chat-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 70vh;
+    width: 50%;
     max-width: 800px;
-    margin: 20px auto;
     background-color: rgba(0, 0, 0, 0.8);
+    color: white;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 #messages {
-    flex: 1;
-    padding: 10px;
+    height: 300px;
     overflow-y: auto;
+    background-color: #222;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    color: white;
 }
 
 .message {
-    margin: 10px 0;
-    padding: 10px;
+    margin: 5px 0;
+    padding: 8px;
     border-radius: 5px;
 }
 
 .message.user {
-    background-color: rgba(0, 0, 255, 0.6);
-    align-self: flex-end;
+    background-color: #4caf50;
     color: white;
+    align-self: flex-end;
 }
 
 .message.ai {
-    background-color: rgba(0, 255, 0, 0.6);
+    background-color: #2196f3;
+    color: white;
     align-self: flex-start;
-    color: black;
 }
 
-#input-container {
+#input-area {
     display: flex;
-    padding: 10px;
-    background-color: rgba(0, 0, 0, 0.9);
+    gap: 10px;
 }
 
 #user-input {
     flex: 1;
     padding: 10px;
-    border: none;
     border-radius: 5px;
+    border: none;
     font-size: 16px;
 }
 
 #send-button {
     padding: 10px 20px;
-    margin-left: 10px;
+    background-color: #2196f3;
+    color: white;
     border: none;
     border-radius: 5px;
-    font-size: 16px;
-    background-color: #00bfff;
-    color: white;
     cursor: pointer;
+    font-size: 16px;
 }
 
-/* Background animation styles */
-#backgroundCanvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: -1;
-} /* Ensure it stays behind other elements */
+#send-button:hover {
+    background-color: #1976d2;
+}
