@@ -1,144 +1,73 @@
-const messagesContainer = document.getElementById("messages");
-const userInput = document.getElementById("user-input");
-const sendButton = document.getElementById("send-button");
+// Chat Functionality
+const chatBox = document.getElementById("chat-box");
+const chatInput = document.getElementById("chat-input");
+const sendButton = document.getElementById("send-btn");
 
-const API_KEY = "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"; // Replace with your actual API key
+sendButton.addEventListener("click", () => {
+  const userMessage = chatInput.value.trim();
+  if (userMessage === "") return;
 
-// Display a message in the chat interface
-function displayMessage(message, sender) {
-    const messageDiv = document.createElement("div");
-    messageDiv.classList.add("message", sender);
-    messageDiv.textContent = message;
-    messagesContainer.appendChild(messageDiv);
-    messagesContainer.scrollTop = messagesContainer.scrollHeight;
-}
+  // Append user message
+  appendMessage("user", userMessage);
+  chatInput.value = "";
 
-// Generate AI response using Hugging Face's Inference API
-async function generateResponse(userMessage) {
-    displayMessage("Thinking...", "ai");
-
-    try {
-        const response = await fetch("https://api-inference.huggingface.co/models/gpt2", {
-            method: "POST",
-            headers: { Authorization: `Bearer ${API_KEY}` },
-            body: JSON.stringify({ inputs: userMessage }),
-        });
-
-        if (!response.ok) {
-            throw new Error("Error generating response: " + response.statusText);
-        }
-
-        const data = await response.json();
-        const aiMessage = data.generated_text || "I'm sorry, I couldn't process that.";
-        displayMessage(aiMessage, "ai");
-    } catch (error) {
-        console.error(error);
-        displayMessage("An error occurred while fetching the response.", "ai");
-    }
-}
-
-// Handle user input
-function sendMessage() {
-    const userMessage = userInput.value.trim();
-    if (!userMessage) return;
-
-    displayMessage(userMessage, "user");
-    userInput.value = "";
-
-    generateResponse(userMessage);
-}
-
-// Event listeners
-sendButton.addEventListener("click", sendMessage);
-userInput.addEventListener("keypress", (event) => {
-    if (event.key === "Enter") sendMessage();
+  // Simulate AI Response
+  appendMessage("ai", "Thinking...");
+  setTimeout(() => {
+    appendMessage("ai", "This is a simulated AI response.");
+  }, 2000);
 });
+
+function appendMessage(sender, message) {
+  const messageElement = document.createElement("div");
+  messageElement.classList.add(sender === "user" ? "user-message" : "ai-message");
+  messageElement.textContent = message;
+  chatBox.appendChild(messageElement);
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
 
 // Background Animation
 const canvas = document.getElementById("background-animation");
 const ctx = canvas.getContext("2d");
-
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-const particlesArray = [];
+const particles = [];
+const particleCount = 100;
 
-// Particle object
-class Particle {
-    constructor(x, y, size, speedX, speedY) {
-        this.x = x;
-        this.y = y;
-        this.size = size;
-        this.speedX = speedX;
-        this.speedY = speedY;
-    }
-
-    update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-
-        // Reduce size slightly, but keep particles alive longer
-        if (this.size > 0.5) this.size -= 0.05; 
-    }
-
-    draw() {
-        ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.closePath();
-        ctx.fill();
-    }
+function createParticles() {
+  for (let i = 0; i < particleCount; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      size: Math.random() * 2,
+      speedX: Math.random() * 2 - 1,
+      speedY: Math.random() * 2 - 1,
+    });
+  }
 }
 
-// Initialize particles
-function initParticles() {
-    for (let i = 0; i < 100; i++) {
-        addParticle();
-    }
+function animateParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach((particle) => {
+    particle.x += particle.speedX;
+    particle.y += particle.speedY;
+
+    if (particle.x < 0 || particle.x > canvas.width) particle.speedX *= -1;
+    if (particle.y < 0 || particle.y > canvas.height) particle.speedY *= -1;
+
+    ctx.beginPath();
+    ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+    ctx.fillStyle = "#00ffcc";
+    ctx.fill();
+  });
+  requestAnimationFrame(animateParticles);
 }
 
-// Add a new particle
-function addParticle() {
-    const size = Math.random() * 5 + 1;
-    const x = Math.random() * canvas.width;
-    const y = Math.random() * canvas.height;
-    const speedX = Math.random() * 1 - 0.5; // Slower horizontal movement
-    const speedY = Math.random() * 1 - 0.5; // Slower vertical movement
-
-    particlesArray.push(new Particle(x, y, size, speedX, speedY));
-}
-
-// Handle particle animation
-function handleParticles() {
-    for (let i = 0; i < particlesArray.length; i++) {
-        particlesArray[i].update();
-        particlesArray[i].draw();
-
-        // Remove particles that shrink to near zero size and regenerate
-        if (particlesArray[i].size <= 0.5) {
-            particlesArray.splice(i, 1);
-            addParticle(); // Replace with a new particle
-            i--;
-        }
-    }
-}
-
-// Animation loop
-function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    handleParticles();
-    requestAnimationFrame(animate);
-}
-
-// Handle window resize
 window.addEventListener("resize", () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    particlesArray.length = 0; // Clear current particles
-    initParticles(); // Reinitialize particles
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 });
 
-// Start animation
-initParticles();
-animate();
-    
+createParticles();
+animateParticles();
