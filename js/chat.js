@@ -1,5 +1,3 @@
-import { Client } from "@gradio/client";
-
 document.addEventListener("DOMContentLoaded", () => {
     
     // Get references to elements
@@ -26,6 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
       displayMessage("Thinking...", "ai"); // Temporary message while waiting for a response
   
       try {
+        const { Client } = await import("@gradio/client");
         const client = await Client.connect("KartikeyGarg/openai-community-gpt2");
         const result = await client.predict("/predict", { param_0: userMessage });
         const aiMessage = result.data || "Sorry, I couldn't process that.";
