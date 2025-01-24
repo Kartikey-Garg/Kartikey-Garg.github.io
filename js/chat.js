@@ -1,3 +1,5 @@
+import { Client } from "@gradio/client";
+
 document.addEventListener("DOMContentLoaded", () => {
     
     // Get references to elements
