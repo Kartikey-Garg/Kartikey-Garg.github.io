@@ -45,7 +45,7 @@ nav a:hover {
   position: relative;
   z-index: 10;
   max-width: 500px;
-  margin: 120px auto; /* Spaced below the menu bar */
+  margin: 120px auto 60px auto; /* Spaced below the menu bar and above the footer */
   padding: 20px;
   background: rgba(0, 0, 0, 0.8);
   border-radius: 10px;
