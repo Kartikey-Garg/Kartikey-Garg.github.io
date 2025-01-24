@@ -2,7 +2,7 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); /* Gradient background */
+  background-color: #282c34; /* Match the background color of Homepage.css */
   overflow: hidden; /* Prevents scrolling on the whole page */
   color: white;
   display: flex;

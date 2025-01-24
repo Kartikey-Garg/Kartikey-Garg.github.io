@@ -64,14 +64,16 @@ document.addEventListener("DOMContentLoaded", () => {
     canvas.height = window.innerHeight;
   
     const particlesArray = [];
-  
+    const colors = ['#FFB6C1', '#FFD700', '#ADFF2F', '#00CED1', '#1E90FF', '#FF69B4']; // Light colors
+
     class Particle {
-      constructor(x, y, size, speedX, speedY) {
+      constructor(x, y, size, speedX, speedY, color) {
         this.x = x;
         this.y = y;
         this.size = size;
         this.speedX = speedX;
         this.speedY = speedY;
+        this.color = color;
       }
   
       update() {
@@ -82,7 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
   
       draw() {
-        ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+        ctx.fillStyle = this.color;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.closePath();
@@ -102,8 +104,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const y = Math.random() * canvas.height;
       const speedX = Math.random() * 1 - 0.5;
       const speedY = Math.random() * 1 - 0.5;
+      const color = colors[Math.floor(Math.random() * colors.length)];
   
-      particlesArray.push(new Particle(x, y, size, speedX, speedY));
+      particlesArray.push(new Particle(x, y, size, speedX, speedY, color));
     }
   
     function handleParticles() {
