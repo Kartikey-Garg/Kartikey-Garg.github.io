@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Chat</title>
   <link rel="stylesheet" href="/css/chat.css">
-  <link rel="stylesheet" href="/css/Homepage.css"> <!-- Include homepage styles -->
 </head>
 <body>
   <!-- Menu Bar -->
@@ -15,17 +14,17 @@
       <li><a href="BlogPage.html">Blogs</a></li>
       <li><a href="Projects.html">Projects</a></li>
       <li><a href="Portfolio.html">About Me</a></li>
-      <li><a href="ai-chat.html">AI Chat</a></li>
+      <li><a href="ai-chat.html" class="active">AI Chat</a></li>
     </ul>
   </nav>
 
   <!-- Background Animation -->
   <canvas id="background-animation"></canvas>
 
-  <!-- Chat Container -->
+  <!-- Chat Section -->
   <div class="chat-container">
     <h1>AI Chat</h1>
-    <div id="chat-box"></div>
+    <div id="messages"></div> <!-- Chat messages will appear here -->
     <div class="input-container">
       <input type="text" id="user-input" placeholder="Type your message here...">
       <button id="send-button">Send</button>
@@ -37,7 +36,7 @@
     <p>&copy; 2025 My Portfolio. All rights reserved.</p>
   </footer>
 
-  <!-- Scripts -->
+  <!-- Chat Script -->
   <script src="/js/chat.js"></script>
 </body>
 </html>
