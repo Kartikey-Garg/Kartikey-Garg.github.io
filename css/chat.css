@@ -78,6 +78,7 @@ h1 {
   padding: 10px 15px;
   border-radius: 15px;
   max-width: 80%;
+  word-wrap: break-word;
 }
 
 .chat-message.user {
