@@ -81,6 +81,7 @@ h1 {
   border-radius: 15px;
   max-width: 80%;
   word-wrap: break-word;
+  display: inline-block;
 }
 
 .chat-message.user {
