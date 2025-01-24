@@ -1,16 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
+    
     // Get references to elements
     const messagesContainer = document.getElementById("messages");
     const userInput = document.getElementById("user-input");
     const sendButton = document.getElementById("send-button");
-  
+    
     if (!messagesContainer || !userInput || !sendButton) {
       console.error("Missing essential DOM elements for the chat functionality.");
       return; // Stop execution if elements are missing
     }
-  
-    const API_KEY = "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"; // Replace with your API key
-    const API_URL = "https://api-inference.huggingface.co/models/gpt2";
   
     // Display a message in the chat interface
     function displayMessage(message, sender) {
@@ -21,30 +19,18 @@ document.addEventListener("DOMContentLoaded", () => {
       messagesContainer.scrollTop = messagesContainer.scrollHeight; // Scroll to the bottom
     }
   
-    // Generate AI response using Hugging Face API
+    // Generate AI response using Hugging Face model
     async function generateResponse(userMessage) {
       displayMessage("Thinking...", "ai"); // Temporary message while waiting for a response
   
       try {
-        const response = await fetch(API_URL, {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${API_KEY}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ inputs: userMessage }),
-        });
-  
-        if (!response.ok) {
-          throw new Error(`API Error: ${response.statusText}`);
-        }
-  
-        const data = await response.json();
-        const aiMessage = data.generated_text || "Sorry, I couldn't process that.";
+        const client = await Client.connect("KartikeyGarg/openai-community-gpt2");
+        const result = await client.predict("/predict", { param_0: userMessage });
+        const aiMessage = result.data || "Sorry, I couldn't process that.";
         const botMessages = messagesContainer.getElementsByClassName("message ai");
         botMessages[botMessages.length - 1].textContent = aiMessage; // Update "Thinking..." with response
       } catch (error) {
-        console.error("Error fetching response from Hugging Face API:", error);
+        console.error("Error fetching response from Hugging Face model:", error);
         const botMessages = messagesContainer.getElementsByClassName("message ai");
         botMessages[botMessages.length - 1].textContent =
           "An error occurred. Please try again.";
@@ -149,4 +135,3 @@ document.addEventListener("DOMContentLoaded", () => {
     initParticles();
     animate();
   });
-  
