@@ -3,7 +3,7 @@ body {
   margin: 0;
   font-family: Arial, sans-serif;
   background: black;
-  overflow: hidden;
+  overflow: hidden; /* Prevents scrolling on the whole page */
   color: white;
 }
 
@@ -49,9 +49,9 @@ h1 {
 }
 
 /* Chat Box */
-#chat-box {
+#messages {
   height: 300px;
-  overflow-y: auto;
+  overflow-y: auto; /* Makes the chat box scrollable */
   padding: 10px;
   background: #121212;
   border-radius: 10px;

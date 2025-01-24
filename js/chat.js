@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Display a message in the chat interface
     function displayMessage(message, sender) {
       const messageDiv = document.createElement("div");
-      messageDiv.classList.add("message", sender);
+      messageDiv.classList.add("chat-message", sender);
       messageDiv.textContent = message;
       messagesContainer.appendChild(messageDiv);
       messagesContainer.scrollTop = messagesContainer.scrollHeight; // Scroll to the bottom
@@ -21,17 +21,17 @@ document.addEventListener("DOMContentLoaded", () => {
   
     // Generate AI response using Hugging Face model
     async function generateResponse(userMessage) {
-      displayMessage("Thinking...", "ai"); // Temporary message while waiting for a response
+      displayMessage("Thinking...", "bot"); // Temporary message while waiting for a response
   
       try {
         const client = await Client.connect("KartikeyGarg/openai-community-gpt2");
         const result = await client.predict("/predict", { param_0: userMessage });
         const aiMessage = result.data || "Sorry, I couldn't process that.";
-        const botMessages = messagesContainer.getElementsByClassName("message ai");
+        const botMessages = messagesContainer.getElementsByClassName("chat-message bot");
         botMessages[botMessages.length - 1].textContent = aiMessage; // Update "Thinking..." with response
       } catch (error) {
         console.error("Error fetching response from Hugging Face model:", error);
-        const botMessages = messagesContainer.getElementsByClassName("message ai");
+        const botMessages = messagesContainer.getElementsByClassName("chat-message bot");
         botMessages[botMessages.length - 1].textContent =
           "An error occurred. Please try again.";
       }
