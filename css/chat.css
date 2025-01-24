@@ -2,13 +2,13 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #f6d365 0%, #fda085 100%); /* Light gradient background */
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); /* Gradient background */
   overflow: hidden; /* Prevents scrolling on the whole page */
   color: white;
   display: flex;
   flex-direction: column;
   height: 100vh;
-  position: relative; /* Ensure abstract shapes are positioned correctly */
+  position: relative; /* Ensure the ball animation is positioned correctly */
 }
 
 /* Menu Bar Styles */
@@ -134,7 +134,7 @@ button#send-button:hover {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1; /* Ensure the balls animation appears on top of the gradient background */
+  z-index: 1; /* Ensure the ball animation appears behind other elements */
 }
 
 /* Abstract Shapes */
@@ -143,7 +143,7 @@ button#send-button:hover {
   background: rgba(255, 255, 255, 0.1);
   border-radius: 50%;
   animation: float 6s ease-in-out infinite;
-  z-index: 2; /* Ensure the abstract shapes appear on top of the gradient background */
+  z-index: 0; /* Ensure the abstract shapes appear behind the ball animation */
 }
 
 .abstract-shape:nth-child(1) {
