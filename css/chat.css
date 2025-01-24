@@ -2,7 +2,7 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: black;
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); /* Gradient background */
   overflow: hidden; /* Prevents scrolling on the whole page */
   color: white;
   display: flex;
@@ -44,7 +44,8 @@ nav a:hover {
 .chat-container {
   position: relative;
   z-index: 10;
-  max-width: 500px;
+  max-width: 700px; /* Increased width */
+  width: 90%; /* Responsive width */
   margin: 120px auto 60px auto; /* Spaced below the menu bar and above the footer */
   padding: 20px;
   background: rgba(0, 0, 0, 0.8);
@@ -64,6 +65,7 @@ h1 {
 /* Chat Box */
 #messages {
   flex-grow: 1;
+  max-height: 400px; /* Set a maximum height */
   overflow-y: auto; /* Makes the chat box scrollable */
   padding: 10px;
   background: #121212;
@@ -131,6 +133,47 @@ button#send-button:hover {
   width: 100%;
   height: 100%;
   z-index: 0;
+}
+
+/* Abstract Shapes */
+.abstract-shape {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  animation: float 6s ease-in-out infinite;
+}
+
+.abstract-shape:nth-child(1) {
+  width: 100px;
+  height: 100px;
+  top: 20%;
+  left: 10%;
+}
+
+.abstract-shape:nth-child(2) {
+  width: 150px;
+  height: 150px;
+  top: 50%;
+  left: 80%;
+}
+
+.abstract-shape:nth-child(3) {
+  width: 200px;
+  height: 200px;
+  top: 80%;
+  left: 30%;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
 
 /* Footer Styles */
