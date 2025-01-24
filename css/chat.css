@@ -8,6 +8,7 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  position: relative; /* Ensure abstract shapes are positioned correctly */
 }
 
 /* Menu Bar Styles */
