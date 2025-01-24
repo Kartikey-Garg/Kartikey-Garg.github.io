@@ -1,5 +1,4 @@
-import { Client } from "./@gradio/client";
-
+import { Client } from "../node_modules/@gradio/client";
 document.addEventListener("DOMContentLoaded", () => {
     // Get references to elements
     const messagesContainer = document.getElementById("messages");
