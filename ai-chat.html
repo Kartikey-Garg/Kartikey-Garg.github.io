@@ -5,14 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Chat</title>
   <link rel="stylesheet" href="/css/chat.css">
+  <link rel="stylesheet" href="/css/Homepage.css"> <!-- Include homepage styles -->
 </head>
 <body>
-  <div class="menu-bar">
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-    <a href="contact.html">Contact</a>
-  </div>
+  <!-- Menu Bar -->
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="BlogPage.html">Blogs</a></li>
+      <li><a href="Projects.html">Projects</a></li>
+      <li><a href="Portfolio.html">About Me</a></li>
+      <li><a href="ai-chat.html">AI Chat</a></li>
+    </ul>
+  </nav>
+
+  <!-- Background Animation -->
   <canvas id="background-animation"></canvas>
+
+  <!-- Chat Container -->
   <div class="chat-container">
     <h1>AI Chat</h1>
     <div id="chat-box"></div>
@@ -21,6 +31,13 @@
       <button id="send-button">Send</button>
     </div>
   </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 My Portfolio. All rights reserved.</p>
+  </footer>
+
+  <!-- Scripts -->
   <script src="/js/chat.js"></script>
 </body>
 </html>
