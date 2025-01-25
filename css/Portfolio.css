@@ -136,3 +136,35 @@ footer a {
 footer a:hover {
     text-decoration: underline;
 }
+
+.badges {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.badge-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    justify-items: center;
+}
+
+.badge {
+    width: 150px;
+    height: 150px;
+}
+
+#show-more-badges {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+#show-more-badges:hover {
+    background-color: #45a049;
+}

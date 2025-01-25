@@ -157,3 +157,25 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchCertifications();
     fetchWorkExperience();
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const showMoreButton = document.getElementById("show-more-badges");
+    const badgeGrid = document.getElementById("badge-grid");
+
+    showMoreButton.addEventListener("click", () => {
+        // Add more badges when the button is clicked
+        const moreBadges = `
+            <div class="badge">
+                <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="another-badge-id" data-share-badge-host="https://www.credly.com"></div>
+                <script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
+            </div>
+            <div class="badge">
+                <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="another-badge-id" data-share-badge-host="https://www.credly.com"></div>
+                <script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
+            </div>
+            <!-- Add more badges as needed -->
+        `;
+        badgeGrid.insertAdjacentHTML("beforeend", moreBadges);
+        showMoreButton.style.display = "none"; // Hide the button after showing more badges
+    });
+});
