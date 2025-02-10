@@ -91,71 +91,25 @@ window.addEventListener('resize', () => {
 initNodes();
 animateNodes();
 
-// Dynamic Content Integration: Credly and LinkedIn APIs
-const certificationsContainer = document.getElementById('certifications');
-const workExperienceContainer = document.getElementById('work-experience');
-
-// Fetch Credly Certifications
-async function fetchCertifications() {
+// Load highlights from about_me.txt
+async function loadHighlights() {
     try {
-        const response = await fetch('https://api.credly.com/v1/organizations/your-org-id/badges', {
-            headers: {
-                Authorization: 'Bearer XXXXXXXXXX',
-            },
-        });
-
+        const response = await fetch('./about_me.txt');
         if (!response.ok) {
-            throw new Error('Failed to fetch certifications.');
+            throw new Error('Failed to load highlights.');
         }
-
-        const data = await response.json();
-        certificationsContainer.innerHTML = data.data
-            .map(
-                (cert) => `
-                <div class="cert-item">
-                    <img src="${cert.badge_template.image_url}" alt="${cert.badge_template.name}" class="cert-badge">
-                    <h4>${cert.badge_template.name}</h4>
-                    <p>Issued by: ${cert.badge_template.issuer.name}</p>
-                </div>
-            `
-            )
-            .join('');
+        const text = await response.text();
+        const highlights = text.split('\n').filter(line => line.trim() !== '');
+        const highlightsContainer = document.getElementById('certifications').querySelector('ul');
+        highlightsContainer.innerHTML = highlights.map(item => `<li>${item}</li>`).join('');
     } catch (error) {
-        certificationsContainer.innerHTML = '<p>Error loading certifications. Please try again later.</p>';
-        console.error(error);
-    }
-}
-
-// Fetch LinkedIn Work Experience
-async function fetchWorkExperience() {
-    try {
-        const response = await fetch('https://api.linkedin.com/v2/me', {
-            headers: {
-                Authorization: 'Bearer XXXXXXXXXX',
-            },
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to fetch work experience.');
-        }
-
-        const data = await response.json();
-        workExperienceContainer.innerHTML = `
-            <div class="work-item">
-                <h4>${data.localizedHeadline}</h4>
-                <p>${data.firstName} ${data.lastName}</p>
-            </div>
-        `;
-    } catch (error) {
-        workExperienceContainer.innerHTML = '<p>Error loading work experience. Please try again later.</p>';
         console.error(error);
     }
 }
 
 // Load Data on Page Load
 document.addEventListener('DOMContentLoaded', () => {
-    fetchCertifications();
-    fetchWorkExperience();
+    loadHighlights();
 });
 
 document.addEventListener("DOMContentLoaded", () => {
