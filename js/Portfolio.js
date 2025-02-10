@@ -179,3 +179,16 @@ document.addEventListener("DOMContentLoaded", () => {
         showMoreButton.style.display = "none"; // Hide the button after showing more badges
     });
 });
+
+// IBM Watson Assistant Chat Integration
+window.watsonAssistantChatOptions = {
+    integrationID: "46f6f74c-3122-4218-b053-e9ae9255b8a9", // The ID of this integration.
+    region: "us-south", // The region your integration is hosted in.
+    serviceInstanceID: "fe133dc3-4df7-408e-9b11-c23537f1aec4", // The ID of your service instance.
+    onLoad: async (instance) => { await instance.render(); }
+};
+setTimeout(function(){
+    const t=document.createElement('script');
+    t.src="https://web-chat.global.assistant.watson.appdomain.cloud/versions/" + (window.watsonAssistantChatOptions.clientVersion || 'latest') + "/WatsonAssistantChatEntry.js";
+    document.head.appendChild(t);
+});
