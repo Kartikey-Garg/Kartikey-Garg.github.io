@@ -91,27 +91,6 @@ window.addEventListener('resize', () => {
 initNodes();
 animateNodes();
 
-// Load highlights from about_me.txt
-async function loadHighlights() {
-    try {
-        const response = await fetch('./about_me.txt');
-        if (!response.ok) {
-            throw new Error('Failed to load highlights.');
-        }
-        const text = await response.text();
-        const highlights = text.split('\n').filter(line => line.trim() !== '');
-        const highlightsContainer = document.getElementById('certifications').querySelector('ul');
-        highlightsContainer.innerHTML = highlights.map(item => `<li>${item}</li>`).join('');
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-// Load Data on Page Load
-document.addEventListener('DOMContentLoaded', () => {
-    loadHighlights();
-});
-
 document.addEventListener("DOMContentLoaded", () => {
     const showMoreButton = document.getElementById("show-more-badges");
     const badgeGrid = document.getElementById("badge-grid");
