@@ -153,10 +153,11 @@ footer a:hover {
 
 .badge {
     width: 150px;
-    height: 150px;
-    border-radius: 10px;
+    height: auto; /* Adjust height to auto */
     padding: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: none; /* Remove box shadow */
+    background: none; /* Remove background */
+    color: #ccc; /* Set text color to gray-white */
 }
 
 .badge img {
