@@ -144,6 +144,15 @@ footer a:hover {
     color: white; /* Ensure text is visible on dark background */
 }
 
+.badge-box {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
 .badge-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
