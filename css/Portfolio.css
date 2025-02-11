@@ -123,7 +123,7 @@ footer {
     text-align: center;
     padding: 10px;
     background: rgba(0, 0, 0, 0.8);
-    position: relative; /* Change to relative */
+    position: relative; /* Ensure footer is positioned correctly */
     bottom: 0;
     width: 100%;
 }
