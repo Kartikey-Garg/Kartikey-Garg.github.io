@@ -119,6 +119,21 @@ h2 {
     border-radius: 5px;
 }
 
+.skills ul {
+    list-style: none;
+    padding: 0;
+}
+
+.skills ul li {
+    background: rgba(0, 0, 0, 0.8);
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    font-size: 1rem;
+    color: #1abc9c;
+}
+
 footer {
     text-align: center;
     padding: 10px;
