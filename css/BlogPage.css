@@ -131,6 +131,8 @@ nav ul li a:hover {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     color: white;
     position: relative;
+    max-height: 90vh; /* Add this line */
+    overflow-y: auto; /* Add this line */
 }
 
 .blog-modal .close-btn {
