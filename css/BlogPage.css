@@ -116,7 +116,7 @@ nav ul li a:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 20;
+    z-index: 30; /* Update this line to ensure modal is on top of the menu bar */
     visibility: hidden;
     opacity: 0;
     transition: visibility 0s, opacity 0.3s ease;
