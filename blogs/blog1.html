@@ -4,24 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Drake's Equation</title>
+    <link rel="stylesheet" href="../css/BlogPage.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            color: #333;
-            background-color: #f4f4f4;
+        .content {
+            max-width: 800px;
+            margin: 100px auto;
+            background: #fff;
             padding: 20px;
-            line-height: 1.6;
-            overflow-y: auto;
-            position: relative;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            color: #333;
         }
 
-        h1 {
+        .content h1 {
             color: #1abc9c;
             margin-bottom: 10px;
             text-align: center;
         }
 
-        img {
+        .content img {
             max-width: 100%;
             border-radius: 10px;
             margin: 20px 0;
@@ -30,7 +31,7 @@
             margin-right: auto;
         }
 
-        .video-container {
+        .content .video-container {
             position: relative;
             padding-bottom: 56.25%; /* 16:9 aspect ratio */
             height: 0;
@@ -41,7 +42,7 @@
             border-radius: 10px;
         }
 
-        .video-container iframe {
+        .content .video-container iframe {
             position: absolute;
             top: 0;
             left: 0;
@@ -50,31 +51,31 @@
             border: none;
         }
 
-        p {
+        .content p {
             margin: 10px 0;
             text-align: justify;
         }
 
-        a {
+        .content a {
             color: #1abc9c;
             text-decoration: none;
         }
 
-        a:hover {
+        .content a:hover {
             text-decoration: underline;
-        }
-
-        .content {
-            max-width: 800px;
-            margin: 0 auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
 <body>
+    <canvas id="backgroundCanvas"></canvas>
+    <nav>
+        <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../BlogPage.html">Blogs</a></li>
+            <li><a href="../Projects.html">Projects</a></li>
+            <li><a href="../Portfolio.html">About Me</a></li>
+        </ul>
+    </nav>
     <div class="content">
         <h1>Drake's Equation</h1>
         <p>In this vast multiverse (theoretically) 
@@ -97,11 +98,12 @@
             
             Today if we talk about in terms of Civilization we are at 0.74 type of civilization and its logarithmic (By Kardashev Scale).</p>
 
-        <img src="./assets/images/Drake's Equation.jpg" alt="Sample Blog Image">
+        <img src="../assets/images/Drake's Equation.jpg" alt="Sample Blog Image">
 
         <div class="video-container">
             <iframe src="https://www.youtube.com/embed/5vNRVEDTKm0?si=WMKBXcbAzbM_MlSf" allowfullscreen></iframe>
         </div>
     </div>
+    <script src="../js/BlogPage.js"></script>
 </body>
 </html>
