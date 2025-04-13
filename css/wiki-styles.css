@@ -1,0 +1,125 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background: linear-gradient(135deg, #1e3c72, #2a5298, #1e3c72);
+    background-size: 300% 300%;
+    animation: gradientAnimation 10s ease infinite;
+    color: white;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+    overflow-y: auto;
+    padding-top: 70px; /* Adjust body padding to account for fixed menu bar */
+}
+
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+h1 {
+    color: #f39c12;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 2.5em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    z-index: 2;
+}
+
+.section {
+    margin: 20px 0;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    width: 80%;
+    max-width: 960px;
+    text-align: center;
+    z-index: 2;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin-top: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+    color: #f39c12;
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.background-earth {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    width: 150px;
+    height: 150px;
+    background: url('../images/wiki-ball.png') no-repeat center center;
+    background-size: contain;
+    opacity: 0.1;
+    transform: translate(-50%, -50%);
+    animation: roll 5s linear infinite;
+    z-index: 1;
+}
+
+@keyframes earthRotation {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes roll {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+/* Menu Bar Styles */
+.menu-bar {
+    width: 100%;
+    background-color: #1e1e1e;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+}
+
+.menu-bar nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.menu-bar nav ul li {
+    margin: 0 15px;
+}
+
+.menu-bar nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.2em;
+    padding: 10px 15px;
+    display: inline-block;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.menu-bar nav ul li a:hover,
+.menu-bar nav ul li a.active {
+    background-color: #f39c12;
+    color: #1e1e1e;
+    border-radius: 5px;
+}
